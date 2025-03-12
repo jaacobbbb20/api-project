@@ -2,7 +2,16 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+# Table Name: Users
+
+* id (primary key)
+* firstName
+* lastName
+* username
+* email
+* hashedPassword
+* createdAt
+* updatedAt
 
 ## API Documentation
 
@@ -12,7 +21,7 @@
 
 All endpoints that require a current user to be logged in.
 
-* Request: endpoints that require authentication
+* Request: Endpoints that require authentication
 * Error Response: Require authentication
   * Status Code: 401
   * Headers:
@@ -30,7 +39,7 @@ All endpoints that require a current user to be logged in.
 All endpoints that require authentication and the current user does not have the
 correct role(s) or permission(s).
 
-* Request: endpoints that require proper authorization
+* Request: Endpoints that require proper authorization
 * Error Response: Require proper authorization
   * Status Code: 403
   * Headers:
@@ -49,8 +58,8 @@ Returns the information about the current user that is logged in.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: GET
+  * Route path: backend/api/session.js
   * Body: none
 
 * Successful Response when there is a logged in user
@@ -90,10 +99,11 @@ information.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: POST
+  * Route path: /backend/api/session.js
   * Headers:
     * Content-Type: application/json
+    * XSRF Token
   * Body:
 
     ```json
@@ -156,10 +166,11 @@ user's information.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: POST
+  * Route path: backend/api/users.js
   * Headers:
     * Content-Type: application/json
+    * XSRF Token
   * Body:
 
     ```json

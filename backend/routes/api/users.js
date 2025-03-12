@@ -14,6 +14,12 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isEmail()
     .withMessage('Please provide a valid email.'),
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a first name.'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a last name.'),
   check('username')
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
@@ -42,6 +48,8 @@ router.post(
       id: user.id,
       email: user.email,
       username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
     };
 
     await setTokenCookie(res, safeUser);
