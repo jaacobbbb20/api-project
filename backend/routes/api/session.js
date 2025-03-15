@@ -70,7 +70,7 @@ router.delete(
     }
   );
 
-  // Restore session user
+// Restore session user
 router.get(
   '/',
   (req, res) => {
