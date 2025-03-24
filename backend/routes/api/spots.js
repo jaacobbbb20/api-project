@@ -108,7 +108,8 @@ router.put(
          }
 
          // Find the spot via the spot's id
-         const spot = await Spot.findByPk(spotId);
+         const spot = await Spot.findByPk(spotId, {
+         });
 
          // No spot?? Spit out a 404 response
          if (!spot) {
@@ -118,7 +119,7 @@ router.put(
          }
 
          // Make sure that the current user owns the spot
-         if (spot.ownerId !== req.user.id) {
+         if (Number(spot.ownerId) !== Number(req.user.id)) {
             return res.status(403).json({
                message: 'Forbidden: You shall not edit this spot'
             });
