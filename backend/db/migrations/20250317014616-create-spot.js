@@ -9,14 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ownerID: {
+      ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users',
           key: 'id',
         },
-        onDelete: 'CASCADE',
+        onDelete: 'cascade',
       },
       address: {
         type: Sequelize.STRING,
