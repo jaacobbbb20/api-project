@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     ownerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: 'ownerId'
-    },
+      field: 'ownerID'
+    },    
     address: {
       type: DataTypes.STRING,
       allowNull: false,

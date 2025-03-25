@@ -388,10 +388,11 @@ Creates and returns a new spot.
 
 * Require Authentication: true
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: POST
+  * Route path: /api/spots
   * Headers:
     * Content-Type: application/json
+    * XSRF-TOKEN: {{xsrfToken}}
   * Body:
 
     ```json
@@ -508,10 +509,11 @@ Updates and returns an existing spot.
 * Require Authentication: true
 * Require proper authorization: Spot must belong to the current user
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: PUT
+  * Route path: /api/spots/:spotId
   * Headers:
     * Content-Type: application/json
+    * XSRF-TOKEN: {{xsrfToken}}
   * Body:
 
     ```json
@@ -630,14 +632,15 @@ Returns all the reviews written by the current user.
 
 * Require Authentication: true
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: GET
+  * Route path: api/reviews/current
   * Body: none
 
 * Successful Response
   * Status Code: 200
   * Headers:
     * Content-Type: application/json
+    * XSRF-Token: {{xsrfToken}}
   * Body:
 
     ```json
@@ -686,14 +689,15 @@ Returns all the reviews that belong to a spot specified by id.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: GET
+  * Route path: /api/spots/:spotId/reviews
   * Body: none
 
 * Successful Response
   * Status Code: 200
   * Headers:
     * Content-Type: application/json
+    * XSRF-Token: {{xsrfToken}}
   * Body:
 
     ```json
@@ -741,10 +745,11 @@ Create and return a new review for a spot specified by id.
 
 * Require Authentication: true
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: POST
+  * Route path: /api/spots/:id/reviews
   * Headers:
     * Content-Type: application/json
+    * XSRF-Token: {{xsrfToken}}
   * Body:
 
     ```json
@@ -801,7 +806,7 @@ Create and return a new review for a spot specified by id.
     ```
 
 * Error response: Review from the current user already exists for the Spot
-  * Status Code: 500
+  * Status Code: 403
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -819,10 +824,11 @@ Create and return a new image for a review specified by id.
 * Require Authentication: true
 * Require proper authorization: Review must belong to the current user
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: POST
+  * Route path: /api/reviews/:reviewId/images
   * Headers:
     * Content-Type: application/json
+    * XSRF-TOKEN:{{xsrfToken}}
   * Body:
 
     ```json
@@ -876,10 +882,11 @@ Update and return an existing review.
 * Require Authentication: true
 * Require proper authorization: Review must belong to the current user
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: PUT
+  * Route path: /api/reviews/:reviewId
   * Headers:
     * Content-Type: application/json
+    * XSRF-TOKEN: {{xsrfToken}}
   * Body:
 
     ```json
@@ -942,8 +949,8 @@ Delete an existing review.
 * Require Authentication: true
 * Require proper authorization: Review must belong to the current user
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: DELETE
+  * Route path: /api/reviews/:reviewId
   * Body: none
 
 * Successful Response

@@ -44,6 +44,10 @@ app.use(
 
 app.use(routes); // Connect all the routes
 
+app.get('/', (req, res) => {
+  return res.json({ message: 'API is running 🎉' });
+});
+
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
