@@ -633,7 +633,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * Route path: api/reviews/current
+  * Route path: /api/reviews/current
   * Body: none
 
 * Successful Response
@@ -976,18 +976,6 @@ Delete an existing review.
       "message": "Review couldn't be found"
     }
     ```
-
-## BOOKINGS
-
-### Get all of the Current# `<name of application here>`
-
-## Database Schema Design
-
-`<insert database schema design here>`
-
-## API Documentation
-
-## USER AUTHENTICATION/AUTHORIZATION
 
 ### All endpoints that require authentication
 

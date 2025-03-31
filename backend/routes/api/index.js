@@ -16,9 +16,4 @@ router.use((req, res) => {
   res.status(404).json({ message: "Resource not found" });
 });
 
-// REMOVE BEFORE PRODUCTION
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
-});
-
 module.exports = router;
