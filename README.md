@@ -13,6 +13,25 @@
 * createdAt
 * updatedAt
 
+# Table Name: Spots
+* id (primary key)
+* ownerId (foreign key)
+* name
+* location
+* description
+* price
+* createdAt
+* updatedAt
+
+# Table Name: Reviews
+* id (primary key)
+* spotId (foreign key)
+* userId (foreign key)
+* review
+* stars
+* createdAt
+* updatedAt
+
 ## API Documentation
 
 ## USER AUTHENTICATION/AUTHORIZATION
@@ -943,8 +962,8 @@ Delete an existing review.
 * Require Authentication: true
 * Require proper authorization: Review must belong to the current user
 * Request
-  * Method: ?
-  * Route path: ?
+  * Method: DELETE
+  * Route path: /api/reviews/:reviewId
   * Body: none
 
 * Successful Response
