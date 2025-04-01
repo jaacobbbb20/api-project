@@ -83,7 +83,6 @@ router.post(
     const { url } = req.body;
     const userId = req.user.id;
 
-    // Find the review by it's ID
     const review = await Review.findByPk(reviewId);
     if (!review) {
       return res.status(404).json({
@@ -91,14 +90,12 @@ router.post(
       });
     }
 
-    // Check if the user is tied to the review
     if (review.userId !== userId) {
       return res.status(403).json({
         message: 'Forbidden: You do not own this review.'
       });
     }
 
-    // Check the current amount of images
     const imagesCount = await ReviewImage.count({ where: { reviewId } });
     if (imagesCount >= 10) {
       return res.status(403).json({
@@ -106,7 +103,6 @@ router.post(
       });
     }
 
-    // Create a new image
     const newImage = await ReviewImage.create({
       reviewId,
       url
@@ -130,7 +126,6 @@ router.put(
     const { review, stars } = req.body;
     const userId = req.user.id;
 
-    // Look for the review
     const existingReview = await Review.findByPk(reviewId);
     if (!existingReview) {
       return res.status(404).json({ 
@@ -138,14 +133,12 @@ router.put(
       });
     }
 
-    // Check if the review belongs to the current user
     if (existingReview.userId !== userId) {
       return res.status(403).json({ 
         message: "Forbidden: Review does not belong to you" 
       });
     }
 
-    // Update the review
     await existingReview.update({ review, stars });
     res.status(200).json({
       id: existingReview.id,
@@ -168,7 +161,6 @@ router.delete(
     const reviewId = parseInt(req.params.reviewId, 10);  // ✅ Parse to integer
     const userId = req.user.id;
 
-    // Check if reviewId is a valid integer
     if (isNaN(reviewId)) {
       return res.status(400).json({
         message: "Bad Request",
@@ -178,26 +170,24 @@ router.delete(
       });
     }
 
-    // Check if the review exists
     const review = await Review.findByPk(reviewId);
 
-    // Return 404 if review is not found
     if (!review) {
       return res.status(404).json({
         message: "Review couldn't be found"
       });
     }
 
-    // Check if the current user owns the review
     if (review.userId !== userId) {
       return res.status(403).json({
         message: "Forbidden: You do not own this review"
       });
     }
 
-    // Delete the review and associated images (CASCADE works automatically)
     await review.destroy();
-    return res.status(200).json({ message: "Successfully deleted" });
+    return res.status(200).json({ 
+      message: "Successfully deleted" 
+    });
   }
 );
 
