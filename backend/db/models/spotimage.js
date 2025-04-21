@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isUrl: true, // Validates that the string is in URL format
+        isUrl: true,
       },
     },
     preview: {

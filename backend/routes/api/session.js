@@ -16,12 +16,16 @@ router.delete(
     }
   );
 
-// GET /api/session
-// Restore session user
-router.get(
-  '/',
-  (req, res) => {
+/* GET /api/session
+      Gets the current user
+      If a user is logged in, return the user's details
+      If a user is not logged in, return null
+      This route assumes that the `restoreUser` middleware in utils/auth.js is applied first.
+          The middleware sets `req.user` based on the XSRF-Token
+*/
+router.get('/', (req, res) => {
     const { user } = req;
+
     if (user) {
       const safeUser = {
         id: user.id,
@@ -30,11 +34,10 @@ router.get(
         email: user.email,
         username: user.username,
       };
-      return res.json({
-        user: safeUser
-      });
-    } else return res.json({ user: null });
-  }
-);
+      return res.json({ user: safeUser });
+    } 
+    
+  else return res.json({ user: null });
+});
 
 module.exports = router;
