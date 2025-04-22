@@ -25,7 +25,9 @@ module.exports = {
         lng: -122.3942,
         name: 'Woodland Mansion',
         description: "Spacious, and wide open space in the heart of the Dark Oak Forest",
-        price: 200
+        price: 200,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         ownerId: demoUser.id,
@@ -37,7 +39,9 @@ module.exports = {
         lng: -118.2437,
         name: 'Mystery Place',
         description: 'I do not know what this place is or where it is',
-        price: 150
+        price: 150,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         ownerId: demoUser.id,
@@ -49,7 +53,9 @@ module.exports = {
         lng: -104.9903,
         name: 'Mountain View',
         description: 'Peaceful mountain escape with stunning vistas.',
-        price: 180
+        price: 180,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ];
 
