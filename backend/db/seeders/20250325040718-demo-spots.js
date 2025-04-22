@@ -10,12 +10,11 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    // Find the demo user
     const demoUser = await User.findOne({ where: { username: 'Demo-lition' } });
 
     // Create three sample spots
-    const spots = await Promise.all([
-      Spot.create({
+    const spots = [
+      {
         ownerId: demoUser.id,
         address: '123 Dark Oak Street',
         city: 'Minecraft',
@@ -26,8 +25,8 @@ module.exports = {
         name: 'Woodland Mansion',
         description: "Spacious, and wide open space in the heart of the Dark Oak Forest",
         price: 200
-      }),
-      Spot.create({
+      },
+      {
         ownerId: demoUser.id,
         address: '456 Mystery Street',
         city: "I don't Know",
@@ -38,8 +37,8 @@ module.exports = {
         name: 'Mystery Place',
         description: 'I do not know what this place is or where it is',
         price: 150
-      }),
-      Spot.create({
+      },
+      {
         ownerId: demoUser.id,
         address: '789 Mountain Rd',
         city: 'Denver',
@@ -50,16 +49,17 @@ module.exports = {
         name: 'Mountain View',
         description: 'Peaceful mountain escape with stunning vistas.',
         price: 180
-      })
-    ]);
+      }
+    ];
+
+    return queryInterface.bulkInsert('Spots', spots, options);
   },
 
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+
+  async down(queryInterface, Sequelize) {
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete('Spots', {
+      name: { [Op.in]: ['Woodland Mansion', 'Mystery Place', 'Mountain View'] }
+    }, options);
   }
 };
