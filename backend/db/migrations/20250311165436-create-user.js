@@ -1,14 +1,17 @@
 'use strict';
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+  options.schema = process.env.SCHEMA;
 }
 
 /** @type {import('sequelize-cli').Migration} */
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable(
+      { tableName: 'Users', ...options }, 
+      {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -47,10 +50,11 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    }, { schema: 'housing_site' });
-  },
+    }, 
+  );
+},
+  
   async down(queryInterface, Sequelize) {
-    options.tableName = "Users";
-    return queryInterface.dropTable(options);
+    await queryInterface.dropTable({ tableName: 'Users', ...options });
   }
 };

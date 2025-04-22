@@ -1,8 +1,17 @@
 'use strict';
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;
+}
+
 /** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Spots', {
+    await queryInterface.createTable(
+      { tableName: 'Spots', ...options },
+      {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,10 +22,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: {
+            tableName: 'Users',
+            schema: options.schema
+          },
           key: 'id',
         },
-        onDelete: 'cascade',
+        onDelete: 'CASCADE',
       },
       address: {
         type: Sequelize.STRING,
@@ -64,7 +76,8 @@ module.exports = {
       }
     });
   },
+  
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Spots');
+    await queryInterface.dropTable({ tableName: 'Spots', ...options });
   }
 };
