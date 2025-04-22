@@ -53,14 +53,13 @@ module.exports = {
       }
     ];
 
-    return queryInterface.bulkInsert('Spots', spots, options);
+    return queryInterface.bulkInsert(options, spots, {});
   },
-
 
   async down(queryInterface, Sequelize) {
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('Spots', {
+    return queryInterface.bulkDelete(options, {
       name: { [Op.in]: ['Woodland Mansion', 'Mystery Place', 'Mountain View'] }
-    }, options);
+    }, {});
   }
 };
