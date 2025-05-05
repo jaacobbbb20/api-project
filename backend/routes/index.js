@@ -1,15 +1,16 @@
+// backend/routes/index.js
+
 const express = require('express');
 const router = express.Router();
 const apiRouter = require('./api');
 
-// Restores the CSRF Token
-router.get("/api/csrf/restore", (req, res) => {
-  const csrfToken = req.csrfToken();
-  res.cookie("XSRF-TOKEN", csrfToken);
-  res.status(200).json({
-    'XSRF-Token': csrfToken
+// Add a XSRF-TOKEN cookie in development
+if (process.env.NODE_ENV !== 'production') {
+  router.get('/api/csrf/restore', (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    return res.json({});
   });
-});
+}
 
 // Mounts the API Router
 router.use('/api', apiRouter);
@@ -35,13 +36,4 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-
-
-// router.get('/hello/world', function(req, res) {
-//   res.cookie('XSRF-TOKEN', req.csrfToken());
-//   res.send('Hello World!');
-// });
-
-
 module.exports = router;
-//ww
