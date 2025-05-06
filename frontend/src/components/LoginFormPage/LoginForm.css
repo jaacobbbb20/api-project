@@ -1,0 +1,92 @@
+/* Font Import */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px ;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+	background-color: white;
+}
+
+/* Styles for the Header */
+
+.header {
+	text-align: center;
+	margin: 1rem;
+}
+
+.text {
+	font-family: "Roboto", sans-serif ;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.underline {
+	width: 85px;
+	height: 4px;
+	background-color: #ff595e;
+	margin: 0.5rem auto;
+	border-radius: 2px;
+}
+
+/* Styles for the input fields */
+
+.inputs {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.input label {
+	font-family: "Roboto", sans-serif ;
+	font-weight: 500;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+input {
+	padding: .75rem;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 1rem;
+}
+
+/* Styles for the button(s) */
+button[type=submit] {
+	font-family: "Roboto", sans-serif ;
+	margin-top: 1.5rem;
+	width: 100%;
+	padding: 0.75rem;
+	background-color: #ff595e;
+	color: white;
+	border: 9px;
+	border-radius: 6px;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+button[type=demouser] {
+	font-family: "Roboto", sans-serif ;
+	margin-top: 1.5rem;
+	margin-bottom: 1rem;
+	width: 100%;
+	padding: 0.75rem;
+	background-color: #ff595e;
+	color: white;
+	border: 9px;
+	border-radius: 6px;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+/* Styling for the error messages */
+.error {
+	color: red;
+	font-size: 0.9rem;
+	margin-top: 0.5rem;
+}
