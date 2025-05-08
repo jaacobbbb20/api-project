@@ -45,10 +45,11 @@ export const login = (user) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-  await csrfFetch('/api/session', {
+  const response = await csrfFetch('/api/session', {
     method: 'DELETE',
   });
   dispatch(removeUser());
+  return response;
 };
 
 export const restoreUser = () => async (dispatch) => {
