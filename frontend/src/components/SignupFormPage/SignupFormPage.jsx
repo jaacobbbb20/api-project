@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import *  as sessionActions from "../../store/session"
 import '../SignupFormPage/SignupForm.css'
 
 function SignupFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const [email, setEmail] = useState({});
-  const [username, setUsername] = useState({});
-  const [firstName, setFirstName] = useState({});
-  const [lastName, setLastName] = useState({});
-  const [password, setPassword] = useState({});
-  const [confirmPassword, setConfirmPassword] = useState({});
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Navigate to="/" replace={true} />;
@@ -75,18 +76,18 @@ function SignupFormPage() {
 
           <label>
             Password
-            <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </label>
           {errors.password && <p className="error-message">{errors.password}</p>}
 
           <label>
             Confirm Password
-            <input type="text" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
           </label>
           {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
         </div>
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={password !== confirmPassword}>Sign Up</button>
       </form>
     </div>
   );
