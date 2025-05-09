@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
-import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 
@@ -33,6 +33,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    closeMenu();
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -55,13 +56,13 @@ function ProfileButton({ user }) {
         ) : (
           <>
             <li>
-              <OpenModalButton
+              <OpenModalMenuItem
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
               />
             </li>
             <li>
-              <OpenModalButton
+              <OpenModalMenuItem
                 buttonText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
