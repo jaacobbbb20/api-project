@@ -1,5 +1,7 @@
 import React from "react"
 import { useModal } from "../../context/Modal"
+import OpenModalButton from "../OpenModalButton/OpenModalButton"
+import { NavLink } from 'react-router-dom'
 
 function openModelMenuItem({
   modalComponent,
@@ -16,7 +18,7 @@ function openModelMenuItem({
   };
 
   return (
-    <li onClick={onClick}>{itemText}</li>
+    <button onClick={onClick}>{itemText}</button>
   );
 }
 

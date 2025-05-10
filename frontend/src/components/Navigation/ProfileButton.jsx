@@ -16,17 +16,16 @@ function ProfileButton({ user }) {
     setShowMenu(!showMenu);
   };
 
+  const closeMenu = (e) => {
+    if (!ulRef.current.contains(e.target)) {
+      setShowMenu(false);
+    }
+  };
+
   useEffect(() => {
     if (!showMenu) return;
 
-    const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
-    };
-
     document.addEventListener('click', closeMenu);
-
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
@@ -39,10 +38,11 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
-      </button>
+    <div className='profile-button-wrapper'>
+      <FaUserCircle
+        className='profile-icon'
+        onClick={toggleMenu}
+      />
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
@@ -57,20 +57,20 @@ function ProfileButton({ user }) {
           <>
             <li>
               <OpenModalMenuItem
-                buttonText="Log In"
+                itemText="Log In"
                 modalComponent={<LoginFormModal />}
               />
             </li>
             <li>
               <OpenModalMenuItem
-                buttonText="Sign Up"
+                itemText="Sign Up"
                 modalComponent={<SignupFormModal />}
               />
             </li>
           </>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 

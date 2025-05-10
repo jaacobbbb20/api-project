@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import { FaBars } from 'react-icons/fa';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -8,16 +9,15 @@ function Navigation({ isLoaded }) {
 
   return (
     <nav className='navbar'>
-      <ul className='nav-list'>
-        <li className='nav-item'>
-          <NavLink to="/">Home</NavLink>
-        </li>
+      <div className='nav-left'>
+        <a href="/" className='logo'>HousingSite</a>
+      </div>
+      <div className='nav-right'>
+        <FaBars className='hamburger-icon' />
         {isLoaded && (
-          <li className='nav-item'>
-            <ProfileButton user={sessionUser} />
-          </li>
+          <ProfileButton user={sessionUser} />
         )}
-      </ul>
+      </div>
     </nav>
   );
 }

@@ -46,13 +46,13 @@ module.exports = {
       {
         ownerId: demoUser.id,
         address: '789 Mountain Rd',
-        city: 'Denver',
-        state: 'CO',
+        city: 'Phoenix',
+        state: 'AZ',
         country: 'USA',
         lat: 39.7392,
         lng: -104.9903,
-        name: 'Mountain View',
-        description: 'Peaceful mountain escape with stunning vistas.',
+        name: 'Lakeside House',
+        description: 'Spacious lakeside house with a place to get in your kayak, watch the sunset, and have fun!',
         price: 180,
         createdAt: new Date(),
         updatedAt: new Date()
