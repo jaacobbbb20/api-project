@@ -1,10 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 .spot-details-wrapper {
-  margin-left: 20px;
-  margin-right: 20px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
 }
 
 .spot-heading h1{
-  font-size: 10px;
+  font-size: 35px;
+  margin-top: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.spot-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.left-side {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.reserve-button-container {
+  width: 300px;
+  border: 1px solid black;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reserve-button-container button {
+  cursor: pointer;
 }
