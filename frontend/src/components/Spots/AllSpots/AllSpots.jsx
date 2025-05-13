@@ -6,7 +6,7 @@ import './AllSpots.css';
 
 function AllSpots() {
   const dispatch = useDispatch();
-  const spots = useSelector(state => state.spots);
+  const spots = useSelector(state => state.spots.allSpots);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

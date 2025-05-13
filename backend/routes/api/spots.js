@@ -146,6 +146,7 @@ router.get('/', validateQueryParams, async (req, res) => {
       avgRating,
       // Find the preview image or fallback
       previewImage: spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null,
+      Owner: spot.Owner
     };
   });
 
@@ -226,11 +227,18 @@ router.get('/:spotId', async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId, {
     include: [
       { model: Review, attributes: ['stars'] },
-      { model: SpotImage, attributes: ['url', 'preview'] }
+      { model: SpotImage, attributes: ['url', 'preview'] },
+      {
+        model: User,
+        as: 'Owner', // Includes the associated owner
+        attributes: ['id', 'firstName', 'lastName'] // Returns owner's name and id
+      }
     ]
   });
+  
   if (!spot) return res.status(404).json({ message: "Spot couldn't be found" });
 
+  // Calculate average rating
   const avgRating = (
     spot.Reviews.reduce((sum, r) => sum + r.stars, 0) /
     (spot.Reviews.length || 1)
@@ -251,7 +259,8 @@ router.get('/:spotId', async (req, res) => {
     createdAt: spot.createdAt,
     updatedAt: spot.updatedAt,
     avgRating,
-    SpotImages: spot.SpotImages.map(img => ({ url: img.url, preview: img.preview }))
+    SpotImages: spot.SpotImages.map(img => ({ url: img.url, preview: img.preview })),
+    Owner: spot.Owner  // Ensure the owner's info is included in the response
   });
 });
 
