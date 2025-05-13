@@ -3,12 +3,18 @@
 // Action Types
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 const SET_SINGLE_SPOT = 'spots/SET_SINGLE_SPOT';
+const ADD_SPOT = 'spots//ADD_SPOT';
 
 /****************************************************/
 
 // Action Creators
 const setSingleSpot = (spot) => ({
   type: SET_SINGLE_SPOT,
+  spot
+});
+
+const addSpot = (spot) => ({
+  type: ADD_SPOT,
   spot
 });
 
@@ -46,6 +52,42 @@ export const getSpotById = (spotId) => async (dispatch) => {
   }
 }
 
+// Spot Form
+export const createSpotThunk = (spotData) => async (dispatch) => {
+  try {
+    const res = await fetch('/api/spots', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(spotData)
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw errorData;
+    }
+
+    const newSpot = await res.json();
+
+    if (spotData.previewImage) {
+      await fetch('/api/spots/${newSpot.id}/images', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          url: spotData.previewImage,
+          preview: true
+        })
+      });
+    }
+    
+    dispatch(setSingleSpot(newSpot));
+
+    return newSpot;
+  } catch (err) {
+    console.error('Error creating spot:', err);
+    throw err;
+  }
+}
+
 /****************************************************/
 
 // Reducer
@@ -67,6 +109,11 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         singleSpot: action.spot
       };
+    case ADD_SPOT:
+      return {
+        ...state,
+        allSpots: [...state.allSpots, action.spot]
+      }
     default:
       return state;
   }
