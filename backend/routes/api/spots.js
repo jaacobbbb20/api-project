@@ -79,11 +79,9 @@ function getErrorMessage(key) {
 }
 
 // GET /api/spots
-// Filters spots with pages using the middleware function above this route
 router.get('/', validateQueryParams, async (req, res) => {
   const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-  // Code for a dynamic 'where' clause for the filters
   const where = {};
   if (minLat !== undefined || maxLat !== undefined) {
     where.lat = {};
@@ -100,6 +98,7 @@ router.get('/', validateQueryParams, async (req, res) => {
     if (minPrice !== undefined) where.price[Op.gte] = minPrice;
     if (maxPrice !== undefined) where.price[Op.lte] = maxPrice;
   }
+
   // Page calculation
   const offset = size * (page - 1);
   const limit = size;
@@ -108,18 +107,28 @@ router.get('/', validateQueryParams, async (req, res) => {
   const spots = await Spot.findAll({
     where,
     include: [
-      { model: Review, attributes: ['stars'] },
-      { model: SpotImage, attributes: ['url'] }
+      {
+        model: Review,
+        attributes: ['stars'],
+      },
+      {
+        model: SpotImage,
+        attributes: ['url', 'preview'],
+        where: { preview: true },
+        required: false, // This ensures it doesn't filter out spots without preview images
+      },
     ],
-    limit, 
-    offset
+    limit,
+    offset,
   });
 
-  // Format the result to contain the selected fields and calculate the average rating 
-  const formatted = spots.map(spot => {
-    const avgRating = (spot.Reviews.reduce((sum,  r) => sum + r.stars, 0) /
-      (spot.Reviews.length || 1)).toFixed(1);
-    
+  // Format the result to contain the selected fields and calculate the average rating
+  const formatted = spots.map((spot) => {
+    const avgRating = (
+      spot.Reviews.reduce((sum, r) => sum + r.stars, 0) /
+      (spot.Reviews.length || 1)
+    ).toFixed(1);
+
     return {
       id: spot.id,
       ownerId: spot.ownerId,
@@ -135,7 +144,8 @@ router.get('/', validateQueryParams, async (req, res) => {
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
       avgRating,
-      previewImage: spot.SpotImages[0]?.url || null
+      // Find the preview image or fallback
+      previewImage: spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null,
     };
   });
 

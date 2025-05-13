@@ -5,7 +5,7 @@ function SpotCard({ spot }) {
   return (
     <NavLink to={`/spots/${spot.id}`} className='spot-card'>
       <img
-        src={spot.previewImage}
+        src={spot.previewImage || "https://images.pexels.com/photos/963486/pexels-photo-963486.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" }
         alt={spot.name}
         className="spot-image"
       />

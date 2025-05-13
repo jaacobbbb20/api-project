@@ -1,24 +1,29 @@
+
+// Action Type
 const LOAD_SPOTS = 'spots/LOAD_SPOTS';
 
-const loadSpots = (spots) => ({
-  type: LOAD_SPOTS,
-  spots
-});
 
-export const fetchSpots = () => async (dispatch) => {
-  const res = await fetch('/api/spots');
-  if (res.ok) {
-    const data = await res.json();
-    dispatch(loadSpots(data.Spots));
+// Thunk
+export const loadSpots = () => async (dispatch) => {
+  try {
+    const response = await fetch('/api/spots');
+    const data = await response.json();
+    console.log("Spots fetched:", data);  // Log the spots to verify the data
+
+    dispatch({
+      type: LOAD_SPOTS,
+      spots: data.Spots
+    });
+  } catch (error) {
+    console.error('Error loading spots:', error);
   }
 };
 
-const spotsReducer = (state = {}, action) => {
+// Reducer
+const spotsReducer = (state = [], action) => {
   switch (action.type) {
-    case LOAD_SPOTS:
-      const newState = {};
-      action.spots.forEach(spot => newState[spot.id] = spot);
-      return newState;
+    case LOAD_SPOTS: 
+      return action.spots;
     default:
       return state;
   }
