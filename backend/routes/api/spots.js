@@ -230,13 +230,16 @@ router.get('/:spotId', async (req, res) => {
       { model: SpotImage, attributes: ['url', 'preview'] },
       {
         model: User,
-        as: 'Owner', // Includes the associated owner
-        attributes: ['id', 'firstName', 'lastName'] // Returns owner's name and id
+        as: 'Owner', 
+        attributes: ['id', 'firstName', 'lastName']
       }
     ]
   });
   
   if (!spot) return res.status(404).json({ message: "Spot couldn't be found" });
+
+  // Log data for Debugging (REMOVE WHEN DONE TESTING)
+  console.log("Spot.daa: ", spot);
 
   // Calculate average rating
   const avgRating = (
@@ -260,7 +263,7 @@ router.get('/:spotId', async (req, res) => {
     updatedAt: spot.updatedAt,
     avgRating,
     SpotImages: spot.SpotImages.map(img => ({ url: img.url, preview: img.preview })),
-    Owner: spot.Owner  // Ensure the owner's info is included in the response
+    Owner: spot.Owner
   });
 });
 
