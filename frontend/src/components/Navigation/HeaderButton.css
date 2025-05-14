@@ -1,0 +1,13 @@
+.header-buttons {
+  display: flex;
+  justify-content: space-between; /* this puts icons at opposite ends */
+  align-items: center;            /* vertically center icons */
+  width: 100%;                    /* full width of container */
+  padding: 0 .5rem;                /* optional spacing */
+}
+
+.hamburger-icon,
+.profile-icon {
+  font-size: 1.8rem;
+  cursor: pointer;
+}

@@ -13,12 +13,18 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.spot-details {
+.spot-info {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 20px;
-  margin-top: 20px;
+}
+
+.spot-main-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .left-side {

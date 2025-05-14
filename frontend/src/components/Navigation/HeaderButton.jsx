@@ -2,11 +2,12 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
-
-function ProfileButton({ user }) {
+import { FaBars } from 'react-icons/fa';
+import './HeaderButton.css'
+function HeaderButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -39,10 +40,16 @@ function ProfileButton({ user }) {
 
   return (
     <div className='profile-button-wrapper'>
-      <FaUserCircle
-        className='profile-icon'
-        onClick={toggleMenu}
-      />
+      <div className='header-buttons'>
+        <FaBars 
+          className='hamburger-icon' 
+          onClick={toggleMenu}
+        />
+        <FaUserCircle
+          className='profile-icon'
+          onClick={toggleMenu}
+        />
+      </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
@@ -74,4 +81,4 @@ function ProfileButton({ user }) {
   );
 }
 
-export default ProfileButton;
+export default HeaderButton;

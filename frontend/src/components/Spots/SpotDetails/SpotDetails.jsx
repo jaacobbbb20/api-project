@@ -2,17 +2,21 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotById } from '../../../store/spots';
+import { getSpotReviews } from "../../../store/reviews";
 import './SpotDetails.css'
+
 function SpotDetails() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
   const spot = useSelector(state => state.spots.singleSpot);
+  const reviews = useSelector(state => state.reviews.spot);
   const handleClick = () => {
     alert('Feature not yet implemented. Coming soon...')
   };
 
   useEffect(() => {
     dispatch(getSpotById(spotId));
+    dispatch(getSpotReviews(spotId));
   }, [dispatch, spotId]);
 
 if (!spot) return <p>Loading spot details...</p>;
@@ -38,7 +42,7 @@ if (!spot.name || !spot.description) {
         )}
       </div>
       
-      <div className="spot-details">
+      <div className="spot-info">
         <div className="left-side">
           <div className="spot-owner">
             <h1>Hosted by {spot.Owner ? `${spot.Owner.firstName} ${spot.Owner.lastName}` : `Unknown`}</h1>
@@ -56,7 +60,20 @@ if (!spot.name || !spot.description) {
 
       <hr />
 
-      
+      <div className="spot-reviews">
+        <h2>Reviews</h2>
+        {reviews.length === 0 ? (
+          <p>No reviews yet!</p>
+        ) : (
+          reviews.map(review => (
+            <div key={review.id} className="review">
+              <h4>{review.User?.firstName || 'Anonymous'}</h4>
+              <p>{review.createdAt.slice(0,10)}</p>
+              <p>{review.review}</p>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   )
 }
