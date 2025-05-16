@@ -23,7 +23,10 @@ router.post('/', async (req, res) => {
 
     if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
       return res.status(401).json({
-        message: 'Invalid Credentials'
+        message: 'Invalid Credentials',
+        errors: {
+          credential: 'The provided credentials are invalid'
+        }
       });
     }
 

@@ -1,5 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+.spot-images-wrapper {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  height: 400px;
+}
+
+.preview-image-container {
+  flex: 1;
+  height: 100%;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.other-images-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  height: 100%;
+}
+
+.other-images-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 .spot-details-wrapper {
   max-width: 1000px;
   margin-left: auto;
@@ -7,7 +42,7 @@
   padding-top: 20px;
 }
 
-.spot-heading h1{
+.spot-heading h1 {
   font-size: 35px;
   margin-top: 0;
   font-family: 'Roboto', sans-serif;
@@ -18,29 +53,89 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 20px;
-}
-
-.spot-main-image {
-  width: 100%;
   height: auto;
-  border-radius: 8px;
-  object-fit: cover;
 }
 
 .left-side {
   flex: 1;
   padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .reserve-button-container {
   width: 300px;
   border: 1px solid black;
+  border-radius: 8px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+}
+
+.reserve-button-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spot-information {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.spot-cost {
+  font-size: 25px;
+  flex: 1;
+  text-align: left;
+  padding-right: 50px;
+}
+
+.spot-rating {
+  text-align: right;
+}
+
+.spot-ratings {
+  display: flex;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.spot-ratings .star-img {
+  font-size: 1.5rem;
 }
 
 .reserve-button-container button {
+  font-family: "Roboto", sans-serif ;
+	width: 100%;
+	padding: 0.75rem;
+	background-color: #ff595e;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-size: 1rem;
+	cursor: pointer;
+}
+
+.spot-owner h1 {
+  font-family: "Roboto", "sans serif";
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.delete-review-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
+}
+.delete-review-btn:hover {
+  background-color: #d9363e;
 }

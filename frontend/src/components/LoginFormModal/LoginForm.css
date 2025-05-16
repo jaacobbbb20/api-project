@@ -118,9 +118,9 @@ button:disabled {
 	opacity: 0.6;
 }
 
-/* Styling for the error messages */
 .error {
 	color: red;
-	font-size: 0.9rem;
+	font-size: 1rem;
+	font-family: "Roboto", "sans-serif";
 	margin-top: 0.5rem;
 }

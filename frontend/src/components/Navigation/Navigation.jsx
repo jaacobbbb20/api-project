@@ -12,6 +12,10 @@ function Navigation({ isLoaded }) {
       </div>
       <div className='nav-right'>
         {isLoaded && (
+          <a href="/spots/new" className='create-spot-link'>Create a New Spot</a>
+        )}
+
+        {isLoaded && (
           <HeaderButton user={sessionUser} />
         )}
       </div>

@@ -7,13 +7,16 @@ import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import { FaBars } from 'react-icons/fa';
 import './HeaderButton.css'
+import { useNavigate } from 'react-router-dom';
+
 function HeaderButton({ user }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -36,6 +39,11 @@ function HeaderButton({ user }) {
     closeMenu();
   };
 
+  const handleManageSpots = () => {
+    setShowMenu(false);
+    navigate('/spots/current');
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -50,34 +58,44 @@ function HeaderButton({ user }) {
           onClick={toggleMenu}
         />
       </div>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <OpenModalMenuItem
-                itemText="Log In"
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li>
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                modalComponent={<SignupFormModal />}
-              />
-            </li>
-          </>
-        )}
-      </ul>
-    </div>
+      {showMenu && (
+        <ul className={ulClassName} ref={ulRef}>
+          {user ? (
+            <>
+              <li className='greeting'>Hello, {user.username}</li>
+              <li className='email'>{user.email}</li>
+              <hr />
+              <li>
+                <button className='manage-spots-button' onClick={handleManageSpots}>
+                  Manage Spots
+                </button>
+              </li>
+              <hr />
+              <li>
+                <button className="logout-button" onClick={logout}>
+                  Log Out
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <OpenModalMenuItem
+                  itemText="Sign Up"
+                  modalComponent={<SignupFormModal />}
+                />
+              </li>
+              <li>
+                <OpenModalMenuItem
+                  itemText="Log In"
+                  modalComponent={<LoginFormModal />}
+                />
+              </li>
+            </>
+          )}
+        </ul>
+      )}
+     </div>
   );
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal.jsx';
 import './LoginForm.css';
 
 function LoginFormModal() {
@@ -14,14 +14,16 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
+
+    dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
+      .catch((data) => {
+        if (data?.errors) {
           setErrors(data.errors);
-        }
-      });
+        } else if (data?.message ==='Invalid credentials') {
+          setErrors({ credential: 'The provided credentials are invalid' });
+        } 
+    });
   };
 
   const handleDemoLogin = () => {
@@ -30,13 +32,14 @@ function LoginFormModal() {
       password: 'password'
     }))
     .then(closeModal)
-    .catch(async (res) => {
-      const data = await res.json();
-      if (data && data.errors) {
+    .catch((data) => {
+      if (data?.errors) {
         setErrors(data.errors);
+      } else {
+        setErrors({ credential: 'An unexpected error occurred.' });
       }
     });
-  }
+  };
 
   return (
     <div 
@@ -45,7 +48,6 @@ function LoginFormModal() {
         if (e.target.classList.contains('modal-overlay')) closeModal();
       }}
     >
-      
       <div className="container">
         <div className="header">
           <div className="text">Log In</div>
@@ -77,17 +79,15 @@ function LoginFormModal() {
             />
           </label>
 
-          
-        </form>
-       
-        <button 
-            type="button"
+          <button 
+            type="submit"
             className="login-button"
-            disabled={credential.length <4 || password.length < 6}
+            disabled={credential.length < 4 || password.length < 6}
           >
             Log In
-        </button>
-
+          </button>
+        </form>
+       
         <button
           type="button"
           className="demo-user-button"

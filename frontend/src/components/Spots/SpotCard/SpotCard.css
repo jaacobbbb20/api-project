@@ -23,11 +23,6 @@
   object-fit: cover;
 }
 
-.spot-details {
-  padding: 10px;
-  font-family: "Roboto", "sans serif"
-}
-
 .spot-detail-row {
   display: flex;
   max-width: 100%;
