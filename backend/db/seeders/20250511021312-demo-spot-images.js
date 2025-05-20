@@ -1,11 +1,19 @@
 'use strict';
 
-const { Spot, SpotImage } = require('../models')
+const { Spot, SpotImage } = require('../models');
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    const demoSpots = await Spot.findAll();
+  async up(queryInterface, Sequelize) {
+    const options = {};
+    if (process.env.NODE_ENV === 'production') {
+      options.schema = process.env.SCHEMA;
+    }
+
+    const demoSpots = await Spot.findAll(options);
+
+    if (demoSpots.length < 4) {
+      throw new Error("Not enough spots to seed images.");
+    }
 
     const spotImages = [
       {
@@ -66,11 +74,17 @@ module.exports = {
       }
     ];
 
-    await queryInterface.bulkInsert('SpotImages', spotImages);
-
+    await queryInterface.bulkInsert(
+      { tableName: 'SpotImages', ...options },
+      spotImages
+    );
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('SpotImages', null, {});
+  async down(queryInterface, Sequelize) {
+    const options = {};
+    if (process.env.NODE_ENV === 'production') {
+      options.schema = process.env.SCHEMA;
+    }
+    await queryInterface.bulkDelete({ tableName: 'SpotImages', ...options }, null, {});
   }
 };
