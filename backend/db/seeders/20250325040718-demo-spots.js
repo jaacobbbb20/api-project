@@ -82,7 +82,16 @@ module.exports = {
       },
     ];
 
-    return queryInterface.bulkInsert(options, spots, {});
+    // Debug validation before insert
+for (let spot of spots) {
+  try {
+    await Spot.build(spot).validate();
+  } catch (err) {
+    console.error("❌ Spot failed validation:", spot.name, err.errors?.map(e => e.message));
+  }
+}
+
+return queryInterface.bulkInsert(options, spots, {});
   },
 
   async down(queryInterface, Sequelize) {
