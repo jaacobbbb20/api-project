@@ -1,10 +1,11 @@
-import { useModal } from "../../context/Modal"
+import { useModal } from "../../context/Modal";
 
-const OpenModelMenuItem = ({
+const OpenModalMenuItem = ({
   modalComponent,
   itemText,
   onItemClick,
-  onModalClose
+  onModalClose,
+  className,
 }) => {
   const { setModalContent, setOnModalClose } = useModal();
 
@@ -15,8 +16,10 @@ const OpenModelMenuItem = ({
   };
 
   return (
-    <button onClick={handleClick}>{itemText}</button>
+    <button onClick={handleClick} className={className}>
+      {itemText}
+    </button>
   );
-}
+};
 
-export default OpenModelMenuItem;
+export default OpenModalMenuItem;

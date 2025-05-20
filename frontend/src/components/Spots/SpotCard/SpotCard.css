@@ -1,21 +1,29 @@
-/* Font Import */
+/* || Font Import */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* _ */
+
+/* || Spot Card Container */
 
 .spot-card-container {
   display: block;
   max-width: 100%;
   width: none;
-  border: 1px solid #ddd;
-  border-radius: 1px;
+  border-radius: 8px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
 }
 
-.spot-card:hover {
-  transform: scale(1.02);
+.spot-card {
+  text-decoration: none;
+  color: inherit;
 }
+
+/* _ */
+
+/* || Image Styling */
 
 .spot-image {
   width: 100%;
@@ -23,19 +31,45 @@
   object-fit: cover;
 }
 
+/* _ */
+
+/* || Spot Detail Row Styling: General */
+
 .spot-detail-row {
   display: flex;
+  margin-top: 5px;
   max-width: 100%;
   width: 430px;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
+
+/* _ */
+
+/* || Spot Detail Row Styling: Left Side */
 
 .spot-left {
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
+
+.spot-location {
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 1rem;
+}
+
+.spot-price {
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  color: black;
+}
+
+/* _ */
+
+/* || Spot Detail Row Styling: Right Side */
 
 .spot-right {
   display: flex;
@@ -43,21 +77,11 @@
   margin-left: auto;
 }
 
-.spot-location {
-  font-size: 18px;
-  color: black;
-  margin-bottom: 10px;
-}
-
-.spot-price {
-  font-size: 14px;
-  color: black;
-}
-
 .spot-rating {
   display: flex;
   align-items: center;
   font-weight: bold;
+  font-family: "Roboto", sans-serif;
   color: #333;
   margin: 1px;
 }
@@ -68,3 +92,5 @@
   height: 20px;
   margin-right: 10px;
 }
+
+/* _ */

@@ -1,25 +1,20 @@
-/* Font Import */
+/* || Font Import */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* _ */
+
+/* || Grid Container Styling */
+
 .spot-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, 300px);
+  justify-content: center;
   gap: 20px;
-
-  max-width: 16500px;
   width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
-}
-
-.spot-card {
-  max-width: 100%;
-  width: 1000px;
-  max-height: 100%;
-  height: 400px;
-  flex: 1 1 calc(25% - 20px);
-  box-sizing: border-box;
 }
 
 .spot-grid-wrapper {
@@ -28,20 +23,14 @@
   padding: 15px ;
 }
 
-@media (max-width: 1024px) {
-  .spot-card {
-    flex: 1 1 calc(33.333% - 20px);
-  }
+/* _ */
+
+/* || Spot Card Styling */
+
+.spot-card {
+  max-width: 100%;
+  height: 400px;
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  .spot-card .spot-grid {
-    flex: 1 1 calc(50% - 20px);
-  }
-}
-
-@media (max-width: 480px) {
-  .spot-card .spot-grid {
-    flex: 1 1 100%;
-  }
-}
+/* _ */

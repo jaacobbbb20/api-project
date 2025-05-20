@@ -1,4 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* || Font Import */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* _ */
+
+/* || Spot Details Container */
+
+.spot-details-wrapper {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+}
+
+.spot-heading h1 {
+  font-size: 35px;
+  margin-top: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+/* _ */
+
+/* || Spot Images Styling */
 
 .spot-images-wrapper {
   display: flex;
@@ -28,25 +51,23 @@
   height: 100%;
 }
 
-.other-images-grid img {
+.other-images-grid img,
+.spot-images-wrapper {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
 }
 
-.spot-details-wrapper {
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 20px;
+.preview-image-container,
+.other-images-grid img {
+  overflow: hidden;
+  display: block;
 }
 
-.spot-heading h1 {
-  font-size: 35px;
-  margin-top: 0;
-  font-family: 'Roboto', sans-serif;
-}
+/* _ */
+
+/* || Spot Information */
 
 .spot-info {
   display: flex;
@@ -54,6 +75,7 @@
   align-items: flex-start;
   gap: 20px;
   height: auto;
+  font-family: "Roboto", sans-serif;
 }
 
 .left-side {
@@ -63,6 +85,20 @@
   flex-direction: column;
   justify-content: flex-start;
 }
+
+.left-side h1 {
+  margin-bottom: 0;
+}
+
+.spot-owner h1 {
+  font-family: "Roboto", "sans serif";
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* _ */
+
+/* || Reserve Section */
 
 .reserve-button-container {
   width: 300px;
@@ -83,19 +119,38 @@
 
 .spot-information {
   display: flex;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  padding-bottom: 20px;
   justify-content: space-between;
   width: 100%;
 }
 
 .spot-cost {
-  font-size: 25px;
-  flex: 1;
-  text-align: left;
-  padding-right: 50px;
+  display: flex;
+  font-family: "Roboto", sans-serif;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.price-amount {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.price-label {
+  font-size: 18px;
+  color: #555;
+  line-height: 1;
+  padding-bottom: 1px;
 }
 
 .spot-rating {
-  text-align: right;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 4px;
+  gap: 4px;
 }
 
 .spot-ratings {
@@ -107,24 +162,35 @@
 
 .spot-ratings .star-img {
   font-size: 1.5rem;
+  display: inline-block;
+  vertical-align: bottom;
 }
 
-.reserve-button-container button {
-  font-family: "Roboto", sans-serif ;
-	width: 100%;
-	padding: 0.75rem;
-	background-color: #ff595e;
-	color: white;
-	border: none;
-	border-radius: 6px;
-	font-size: 1rem;
-	cursor: pointer;
+.spot-cost,
+.spot-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+/* _ */
+
+/* || Button Styling */
+
+.reserve-button-container button,
+.post-review-btn {
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #ff595e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
-.spot-owner h1 {
-  font-family: "Roboto", "sans serif";
-  margin-top: 0;
-  margin-bottom: 0;
+.post-review-btn:hover {
+  background-color: #e04b4f;
 }
 
 .delete-review-btn {
@@ -136,6 +202,79 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
 .delete-review-btn:hover {
   background-color: #d9363e;
 }
+
+/* _ */
+
+/* || Reviews Section */
+
+.spot-reviews {
+  margin-top: 40px;
+  font-family: "Roboto", sans-serif;
+}
+
+.spot-reviews h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.review {
+  border-bottom: 1px solid #eee;
+  padding: 20px 24px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.review-header p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.review p {
+  margin: 8px 0 0 0;
+  line-height: 1.4;
+  color: #333;
+}
+
+.spot-reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.spot-reviews-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.no-review-text {
+  margin-top: 8px;
+  font-size: 1rem;
+  font-style: italic;
+  color: #555;
+}
+
+/* _ */

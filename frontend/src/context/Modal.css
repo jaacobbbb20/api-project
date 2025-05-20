@@ -1,4 +1,4 @@
-.modal {
+#modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -7,9 +7,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
-.modal-background {
+#modal-background {
   position: fixed;
   top: 0;
   right: 0;
@@ -18,7 +19,12 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.modal-content {
-  position: absolute;
+#modal-content {
+  position: relative;
   background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  z-index: 1001;
 }

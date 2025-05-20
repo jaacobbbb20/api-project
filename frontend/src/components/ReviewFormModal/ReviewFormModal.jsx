@@ -8,21 +8,23 @@ function StarRating({ stars, setStars }) {
   const [hover, setHover] = useState(0);
 
   return (
-    <div className="star-rating">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={star}
-          className={`star ${star <= (hover || stars) ? "filled" : ""}`}
-          onClick={() => setStars(star)}
-          onMouseEnter={() => setHover(star)}
-          onMouseLeave={() => setHover(0)}
-          style={{ cursor: "pointer", fontSize: "2rem" }}
-          role="button"
-          aria-label={`${star} Star`}
-        >
-          &#9733;
-        </span>
-      ))}
+    <div className="star-rating-container">
+      <div className="star-rating">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <span
+            key={star}
+            className={`star ${star <= (hover || stars) ? "filled" : ""}`}
+            onClick={() => setStars(star)}
+            onMouseEnter={() => setHover(star)}
+            onMouseLeave={() => setHover(0)}
+            role="button"
+            aria-label={`${star} Star`}
+          >
+            &#9733;
+          </span>
+        ))}
+      </div>
+      <span className="star-rating-label">Stars</span>
     </div>
   );
 }
@@ -39,10 +41,9 @@ function ReviewFormModal({ spotId }) {
 
     const newReview = {
       review,
-      stars: parseInt(stars, 10), // Make sure it's a number
+      stars: parseInt(stars, 10),
     };
 
-    console.log("Submitting review:", newReview);
 
     const res = await dispatch(createReview(spotId, newReview));
 
@@ -55,34 +56,30 @@ function ReviewFormModal({ spotId }) {
 
   return (
     <div
-      className="modal-overlay"
+      className="review-modal__overlay"
       onClick={(e) => {
-        if (e.target.classList.contains("modal-overlay")) {
+        if (e.target.classList.contains("review-modal__overlay")) {
           closeModal();
         }
       }}
     >
-      {" "}
       <div className="review-modal">
-        <h2>Leave a Review</h2>
+        <h2 className="review-modal__title">How was your stay?</h2>
         <form onSubmit={handleSubmit}>
           {errors.map((err, idx) => (
-            <p key={idx} className="error">
+            <p key={idx} className="review-modal__error">
               {err}
             </p>
           ))}
 
           <textarea
-            placeholder="Write your review here..."
+            placeholder="Leave your review here..."
             value={review}
             onChange={(e) => setReview(e.target.value)}
             required
           />
 
-          <label>
-            Stars:
-            <StarRating stars={stars} setStars={setStars} />
-          </label>
+          <StarRating stars={stars} setStars={setStars} />
 
           <button
             type="submit"

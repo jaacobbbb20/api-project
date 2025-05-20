@@ -1,3 +1,11 @@
+/* || Font Import */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+/* _ */
+
+/* || Spot Form Styling */
+
 .spot-form {
   max-width: 600px;
   margin: 2rem auto;
@@ -5,9 +13,13 @@
   background-color: #fafafa;
   border-radius: 8px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  font-family: "Roboto", "sans-serif";
+  font-family: "Roboto", sans-serif;
   color: #222;
 }
+
+/* _ */
+
+/* || Headings and Structure Styling */
 
 .spot-form h1 {
   font-size: 1.8rem;
@@ -28,6 +40,10 @@
   border-bottom: 1px solid #ddd;
 }
 
+/* _ */
+
+/* || Input and Text Area Styling */
+
 .spot-form label {
   display: block;
   margin-bottom: 1rem;
@@ -36,21 +52,33 @@
 }
 
 .spot-form input[type="text"],
-.spot-form input[type="number"] {
+.spot-form input[type="number"],
+.spot-form textarea {
   width: 100%;
   padding: 0.6rem 0.75rem;
   font-size: 1rem;
   border: 1.5px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
 .spot-form input[type="text"]:focus,
-.spot-form input[type="number"]:focus {
+.spot-form input[type="number"]:focus,
+.spot-form textarea:focus {
   outline: none;
   border-color: #ff595e;
   box-shadow: 0 0 5px #ff595e;
 }
+
+.spot-form textarea {
+  height: 150px;
+  resize: none;
+}
+
+/* _ */
+
+/* || Button Styling */
 
 .spot-form button {
   background-color: #ff595e;
@@ -69,10 +97,34 @@
   background-color: #ff595e;
 }
 
-.spot-location, .spot-description {
+/* _ */
+
+/* || Miscellaneous */
+
+.spot-description {
   margin-bottom: 1.5rem;
 }
 
 .remove-image-btn {
-  margin-bottom: 19.2px;
+  margin-bottom: 1.2rem;
 }
+
+.form-row {
+  margin-bottom: 1.5rem;
+}
+
+.input-error-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.form-error-inline {
+  color: red;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+
+/* _ */
