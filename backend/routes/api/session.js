@@ -7,6 +7,43 @@ const { User } = require('../../db/models');
 
 const router = express.Router();
 
+// POST /api/users/login
+// Log in
+router.post('/', async (req, res) => {
+    const { credential, password } = req.body;
+
+    const user = await User.unscoped().findOne({
+      where: {
+        [Op.or]: {
+          username: credential,
+          email: credential
+        }
+      }
+    });
+
+    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+      return res.status(401).json({
+        message: 'Invalid Credentials',
+        errors: {
+          credential: 'The provided credentials are invalid'
+        }
+      });
+    }
+
+    const safeUser = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username,
+    };
+
+    await setTokenCookie(res, user);
+
+    return res.json({ user: safeUser });
+  }
+);
+
 // Log out
 router.delete(
     '/',

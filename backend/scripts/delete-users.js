@@ -6,6 +6,5 @@ const { User } = require('../db/models');
 (async () => {
   // await User.destroy({ where: {} }); // remove all users
   // await User.destroy({ where: { id: x } }); // remove a user by specific id
-  console.log('✅ Users deleted');
   process.exit();
 })();

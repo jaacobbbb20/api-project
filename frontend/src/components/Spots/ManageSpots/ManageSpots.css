@@ -1,0 +1,82 @@
+/* || Container Layout */
+
+.manage-spots-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.manage-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.manage-spots-container h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* || Create Spot Button */
+
+.create-spot-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.2s;
+}
+
+.create-spot-btn:hover {
+  background-color: #e0484e;
+}
+
+/* || Spot List Grid */
+
+.spots-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+}
+
+/* || Spot Card */
+
+.manage-spot-card {
+  padding: 16px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* || Action Buttons */
+
+.manage-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.manage-buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #ff5a5f;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.manage-buttons button:hover {
+  background-color: #e0484e;
+}

@@ -9,17 +9,11 @@ const { validateSignup, validateLogin} = require('../../utils/validation');
 const router = express.Router();
 
 // Sign up
-router.post(
-  '/',
-  validateSignup,
-  async (req, res, next) => {
+router.post('/', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, username, password } = req.body;
     
-    const existingUser = await User.findOne({
-      where: {
-        [Op.or]: [{ email }, { username }]
-      }
-    });
+    // Check if a user with the same username or email already exists
+    const existingUser = await User.findOne({ where: { [Op.or]: [{ email }, { username }] } });
 
     if (existingUser) {
       return res.status(500).json({
@@ -31,9 +25,11 @@ router.post(
       });
     }
 
+    // If the user does not exist, first hash the password, then create a new user
     const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ email, username, hashedPassword, firstName, lastName });
+    const user = await User.create({ firstName, lastName, email, username, hashedPassword });
 
+    // Prepare the data for the response
     const safeUser = {
       id: user.id,
       firstName: user.firstName,
@@ -44,46 +40,7 @@ router.post(
     
     await setTokenCookie(res, safeUser);
 
-    return res.status(201).json({ user: safeUser });
-  }
-);
-
-// POST /api/users/login
-// Log in
-router.post(
-  '/login',
-  validateLogin,
-  async (req, res, next) => {
-    const { credential, password } = req.body;
-
-    const user = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential
-        }
-      }
-    });
-
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-      return res.status(401).json({
-        message: 'Invalid Credentials'
-      });
-    }
-
-    const safeUser = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-    };
-
-    await setTokenCookie(res, safeUser);
-
-    return res.json({
-      user: safeUser
-    });
+    res.status(201).json({ user: safeUser });
   }
 );
 

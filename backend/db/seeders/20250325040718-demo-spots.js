@@ -13,13 +13,14 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const demoUser = await User.findOne({ where: { username: 'Demo-lition' } });
 
-    // Create three sample spots
+    // Sample spot data
+
     const spots = [
       {
         ownerId: demoUser.id,
         address: '123 Dark Oak Street',
-        city: 'Minecraft',
-        state: 'MC',
+        city: 'Renton',
+        state: 'WA',
         country: 'USA',
         lat: 37.7897,
         lng: -122.3942,
@@ -46,14 +47,28 @@ module.exports = {
       {
         ownerId: demoUser.id,
         address: '789 Mountain Rd',
-        city: 'Denver',
-        state: 'CO',
+        city: 'Phoenix',
+        state: 'AZ',
         country: 'USA',
         lat: 39.7392,
         lng: -104.9903,
-        name: 'Mountain View',
-        description: 'Peaceful mountain escape with stunning vistas.',
+        name: 'Lakeside House',
+        description: 'Spacious lakeside house with a place to get in your kayak, watch the sunset, and have fun!',
         price: 180,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        ownerId: demoUser.id,
+        address: '123 Sesame Street',
+        city: "Elmo",
+        state: 'CA',
+        country: 'USA',
+        lat: 34.0522,
+        lng: -118.2437,
+        name: "Oscar's Trash Can",
+        description: 'Stay in the iconic location Oscar the Grouch stayed in!',
+        price: 150,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -65,7 +80,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Woodland Mansion', 'Mystery Place', 'Mountain View'] }
+      name: { [Op.in]: ['Woodland Mansion', 'Mystery Place', 'Mountain View', "Oscar's Trash Can"] }
     }, {});
   }
 };

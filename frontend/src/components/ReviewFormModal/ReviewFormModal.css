@@ -1,0 +1,135 @@
+#modal-content {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* || Review Modal Overlay */
+
+.review-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100dvh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* || Review Modal Box */
+
+.review-modal {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05); /* cleaner subtle edge */
+  overflow: hidden;
+}
+
+/* || Modal Heading */
+
+.review-modal__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+}
+
+/* || Error Message */
+
+.review-modal__error {
+  color: #d93025;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+/* || Textarea */
+
+.review-modal textarea {
+  width: 100%;
+  max-width: 500px;
+  height: 200px;
+  overflow-y: auto;
+  margin: 0 auto 1rem auto;
+  display: block;
+  padding: 12px;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: none;
+  box-sizing: border-box;
+}
+
+/* || Star Rating Section */
+
+.star-rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.star-rating {
+  display: flex;
+  gap: 6px;
+}
+
+.star-rating .star {
+  font-size: 28px;
+  color: #ccc;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.star-rating .star.filled {
+  color: #ffb400;
+}
+
+.star-rating-label {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* || Submit Button */
+
+.review-modal button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 0;
+  background-color: #ff595e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.review-modal button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.review-modal button:hover:not(:disabled) {
+  background-color: #e04b4f;
+}
