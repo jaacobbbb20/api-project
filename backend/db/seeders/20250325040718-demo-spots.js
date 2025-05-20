@@ -1,6 +1,6 @@
 'use strict';
 
-const { User, Spot, SpotImage } = require('../models');
+const { User, Spot } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -8,12 +8,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 options.tableName = 'Spots';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    const demoUser = await User.findOne({ where: { username: 'Demo-lition' } });
+  async up(queryInterface, Sequelize) {
+    const demoUser = await User.findOne({
+      where: { username: 'Demo-lition' },
+      ...options // ensure schema-scoped in production
+    });
 
-    // Sample spot data
+    if (!demoUser) throw new Error("Demo-lition user not found. Seed Users first!");
 
     const spots = [
       {
@@ -80,7 +82,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Woodland Mansion', 'Mystery Place', 'Mountain View', "Oscar's Trash Can"] }
+      name: { [Op.in]: ['Woodland Mansion', 'Mystery Place', 'Lakeside House', "Oscar's Trash Can"] }
     }, {});
   }
 };
