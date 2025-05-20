@@ -10,12 +10,13 @@ options.tableName = "Spots";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+
     const demoUser = await User.findOne({
       where: { username: "Demo-lition" },
-      ...(process.env.NODE_ENV === "production" && {
-        searchPath: process.env.SCHEMA,
-      }),
+      searchPath: process.env.NODE_ENV === "production" ? process.env.SCHEMA : undefined
     });
+    
+    console.log("🔍 DEMO USER:", demoUser);
 
     if (!demoUser)
       throw new Error("Demo-lition user not found. Seed Users first!");
