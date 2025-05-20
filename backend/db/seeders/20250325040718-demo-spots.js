@@ -16,8 +16,6 @@ module.exports = {
       searchPath: process.env.NODE_ENV === "production" ? process.env.SCHEMA : undefined
     });
     
-    console.log("🔍 DEMO USER:", demoUser);
-
     if (!demoUser)
       throw new Error("Demo-lition user not found. Seed Users first!");
 
@@ -66,32 +64,9 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        ownerId: demoUser.id,
-        address: "123 Sesame Street",
-        city: "Elmo",
-        state: "CA",
-        country: "USA",
-        lat: 34.0522,
-        lng: -118.2437,
-        name: "Oscar's Trash Can",
-        description: "Stay in the iconic location Oscar the Grouch stayed in!",
-        price: 150,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
     ];
 
-    // Debug validation before insert
-for (let spot of spots) {
-  try {
-    await Spot.build(spot).validate();
-  } catch (err) {
-    console.error("❌ Spot failed validation:", spot.name, err.errors?.map(e => e.message));
-  }
-}
-
-return queryInterface.bulkInsert(options, spots, {});
+    return queryInterface.bulkInsert(options, spots, {});
   },
 
   async down(queryInterface, Sequelize) {
@@ -104,7 +79,6 @@ return queryInterface.bulkInsert(options, spots, {});
             "Woodland Mansion",
             "Mystery Place",
             "Lakeside House",
-            "Oscar's Trash Can",
           ],
         },
       },
