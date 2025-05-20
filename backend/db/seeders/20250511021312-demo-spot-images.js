@@ -11,6 +11,8 @@ module.exports = {
 
     const demoSpots = await Spot.findAll(options);
 
+    console.log("🧪 FOUND SPOTS:", demoSpots.length);
+
     if (demoSpots.length < 4) {
       throw new Error("Not enough spots to seed images.");
     }
