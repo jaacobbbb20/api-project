@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const { Spot, SpotImage } = require('../models');
+const { Spot, SpotImage } = require("../models");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
     const options = {};
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       options.schema = process.env.SCHEMA;
     }
 
@@ -71,20 +71,24 @@ module.exports = {
         preview: true,
         createdAt: new Date(),
         updatedAt: new Date(),
-      }
+      },
     ];
 
     await queryInterface.bulkInsert(
-      { tableName: 'SpotImages', ...options },
+      { tableName: "SpotImages", ...options },
       spotImages
     );
   },
 
   async down(queryInterface, Sequelize) {
     const options = {};
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       options.schema = process.env.SCHEMA;
     }
-    await queryInterface.bulkDelete({ tableName: 'SpotImages', ...options }, null, {});
-  }
+    await queryInterface.bulkDelete(
+      { tableName: "SpotImages", ...options },
+      null,
+      {}
+    );
+  },
 };
