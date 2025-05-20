@@ -11,9 +11,7 @@ module.exports = {
 
     const demoSpots = await Spot.findAll(options);
 
-    console.log("🧪 FOUND SPOTS:", demoSpots.length);
-
-    if (demoSpots.length < 4) {
+    if (demoSpots.length < 3) {
       throw new Error("Not enough spots to seed images.");
     }
 
@@ -64,13 +62,6 @@ module.exports = {
         spotId: demoSpots[2].id,
         url: "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
         preview: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        spotId: demoSpots[3].id,
-        url: "https://live.staticflickr.com/4123/4895368331_2fdd79262d_c.jpg",
-        preview: true,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
