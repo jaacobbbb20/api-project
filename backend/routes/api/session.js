@@ -1,35 +1,57 @@
-const express = require('express');
-const { Op } = require('sequelize');
-const bcrypt = require('bcryptjs');
+const express = require("express");
+const { Op } = require("sequelize");
+const bcrypt = require("bcryptjs");
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { setTokenCookie, restoreUser } = require("../../utils/auth");
+const { User } = require("../../db/models");
 
 const router = express.Router();
 
-// POST /api/users/login
-// Log in
-router.post('/', async (req, res) => {
-    const { credential, password } = req.body;
+/* POST /api/users/login - Log the user in */
+router.post("/", validateLogin, async (req, res, next) => {
+  const { credential, password } = req.body;
 
-    const user = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential
-        }
-      }
-    });
+  const user = await User.unscoped().findOne({
+    where: {
+      [Op.or]: {
+        username: credential,
+        email: credential,
+      },
+    },
+  });
 
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-      return res.status(401).json({
-        message: 'Invalid Credentials',
-        errors: {
-          credential: 'The provided credentials are invalid'
-        }
-      });
-    }
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+    const err = new Error("Login failed");
+    err.status = 401;
+    err.title = "Login failed";
+    err.errors = { credential: "The provided credentials were invalid." };
+    return next(err);
+  }
 
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.json({
+    user: safeUser,
+  });
+});
+
+/* DELETE /api/session - Log out the user */
+router.delete("/", (_req, res) => {
+  res.clearCookie("token");
+  return res.json({ message: "success" });
+});
+
+/* GET /api/session - Get the current user */
+router.get("/", (req, res) => {
+  const { user } = req;
+
+  if (user) {
     const safeUser = {
       id: user.id,
       firstName: user.firstName,
@@ -37,44 +59,8 @@ router.post('/', async (req, res) => {
       email: user.email,
       username: user.username,
     };
-
-    await setTokenCookie(res, user);
-
     return res.json({ user: safeUser });
-  }
-);
-
-// Log out
-router.delete(
-    '/',
-    (_req, res) => {
-      res.clearCookie('token');
-      return res.json({ message: 'success' });
-    }
-  );
-
-/* GET /api/session
-      Gets the current user
-      If a user is logged in, return the user's details
-      If a user is not logged in, return null
-      This route assumes that the `restoreUser` middleware in utils/auth.js is applied first.
-          The middleware sets `req.user` based on the XSRF-Token
-*/
-router.get('/', (req, res) => {
-    const { user } = req;
-
-    if (user) {
-      const safeUser = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        username: user.username,
-      };
-      return res.json({ user: safeUser });
-    } 
-    
-  else return res.json({ user: null });
+  } else return res.json({ user: null });
 });
 
 module.exports = router;
