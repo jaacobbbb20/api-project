@@ -10,13 +10,13 @@ const {
   SpotImage,
 } = require("../../db/models");
 
-const { validateReview } = require("../../utils/validation");
+const { check, validationResult } = require('express-validator');
 
 /* --------------------- */
 /*      Validators       */
 /* --------------------- */
 
-const validateReview = [
+const validateReviewInput = [
   check("review")
     .exists({ checkFalsy: true })
     .withMessage("Review text is required"),
@@ -43,7 +43,7 @@ const validateReview = [
 /*        Routes         */
 /* --------------------- */
 
-/* GET /api/reviews/current - Get all Reviews of the Current User */
+/* GET /api/reviews/current - Get all reviews from the current user */
 router.get("/current", requireAuth, async (req, res, next) => {
   const reviews = await Review.findAll({
     where: { userId: req.user.id },
@@ -88,7 +88,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
   res.json({ Reviews: formatted });
 });
 
-/* POST /api/reviews/:reviewId/images - Add an Image to a Review based on the Review's id */
+/* POST /api/reviews/:reviewId/images - Add an image to a review based on the review's id */
 router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
   const { reviewId } = req.params;
   const { url } = req.body;
@@ -125,11 +125,11 @@ router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
   });
 });
 
-/* PUT /api/reviews/:reviewId - Edit a review */
+/* PUT /api/reviews/:reviewId - Edit a review based on the review's id */
 router.put(
   "/:reviewId",
   requireAuth,
-  validateReview,
+  validateReviewInput,
   async (req, res, next) => {
     const { reviewId } = req.params;
     const { review, stars } = req.body;
@@ -162,7 +162,7 @@ router.put(
   }
 );
 
-/* DELETE /reviews/:reviewId - Delete a review */
+/* DELETE /api/reviews/:reviewId - Delete a review based on the review's id */
 router.delete("/:reviewId", requireAuth, async (req, res) => {
   const reviewId = parseInt(req.params.reviewId, 10); // ✅ Parse to integer
   const userId = req.user.id;
@@ -194,6 +194,33 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
   return res.status(200).json({
     message: "Successfully deleted",
   });
+});
+
+/* DELETE /api/reviews/review-images/:imageId - Deletes a review image based on the image's id */
+router.delete(
+    '/review-images/:imageId', 
+    requireAuth, 
+    async (req, res) => {
+        const { imageId } = req.params;
+        const userId = req.user.id;
+
+        const reviewImage = await ReviewImage.findByPk(imageId, {
+            include: { model: Review }
+        });
+
+        if (!reviewImage) {
+            return res.status(404).json({ message: "Review Image couldn't be found" });
+        }
+
+        if (reviewImage.Review.userId !== userId) {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        await reviewImage.destroy();
+
+        return res.status(200).json({
+        message: "Successfully deleted"
+    });
 });
 
 module.exports = router;
