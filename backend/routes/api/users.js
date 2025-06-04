@@ -8,6 +8,10 @@ const { validateSignup, validateLogin} = require('../../utils/validation');
 
 const router = express.Router();
 
+/* --------------------- */
+/*        Routes         */
+/* --------------------- */
+
 // Sign up
 router.post('/', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, username, password } = req.body;

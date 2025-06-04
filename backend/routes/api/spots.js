@@ -1,19 +1,80 @@
 const express = require("express");
 const { Op } = require("sequelize");
-const {
-  Spot,
-  Review,
-  ReviewImage,
-  User,
-  SpotImage,
-} = require("../../db/models");
+const { check, validationResult } = require("express-validator");
+
 const { requireAuth } = require("../../utils/auth");
-const { validateSpot } = require("../../utils/validation");
-const { validateReview } = require("../../utils/validation");
+const { handleValidationErrors } = require("../../utils/validation");
+
+const { Spot, Review, ReviewImage, User, SpotImage } = require("../../db/models");
 
 const router = express.Router();
 
-// Middleware: Validates and parses query parameters for GET/api/spots
+/* --------------------- */
+/*      Validators       */
+/* --------------------- */
+
+const validateSpot = [
+  check('address')
+     .exists({ checkFalsy: true })
+     .withMessage('Street address is required'),
+  check('city')
+     .exists({ checkFalsy: true })
+     .withMessage('City is required'),
+  check('state')
+     .exists({ checkFalsy: true })
+     .withMessage('State is required'),
+  check('country')
+     .exists({ checkFalsy: true })
+     .withMessage('Country is required'),
+  check('lat')
+     .isFloat({ min: -90, max: 90 })
+     .withMessage('Latitude is not valid'),
+  check('lng')
+     .isFloat({ min: -180, max: 180 })
+     .withMessage('Longitude is not valid'),
+  check('name')
+     .exists({ checkFalsy: true })
+     .withMessage('Name must be less than 50 characters')
+     .isLength({ max: 50 })
+     .withMessage('Name must be less than 50 characters'),
+  check('description')
+     .exists({ checkFalsy: true })
+     .withMessage('Description is required'),
+  check('price')
+     .exists({ checkFalsy: true })
+     .isFloat({ min: 0.01 })
+     .withMessage('Price per day is required'),
+  handleValidationErrors
+];
+
+const validateReviewInput = [
+  check("review")
+    .exists({ checkFalsy: true })
+    .withMessage("Review text is required"),
+  check("stars")
+    .isInt({ min: 1, max: 5 })
+    .withMessage("Stars must be an integer from 1 to 5"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorObj = {};
+      errors.array().forEach((err) => {
+        errorObj[err.path] = err.msg;
+      });
+      const err = new Error("Bad Request");
+      err.errors = errorObj;
+      err.status = 400;
+      return next(err);
+    }
+    next();
+  },
+];
+
+/* --------------------- */
+/*   Helper Middleware   */
+/* --------------------- */
+
+/* Validates and parses query parameters for GET/api/spots */
 function validateQueryParams(req, res, next) {
   let {
     page = "1",
@@ -80,7 +141,7 @@ function validateQueryParams(req, res, next) {
   next();
 }
 
-// Helper function to return custom error messages
+/* Helper function to return custom error messages */
 function getErrorMessage(key) {
   switch (key) {
     case "minLat":
@@ -100,7 +161,11 @@ function getErrorMessage(key) {
   }
 }
 
-// GET /api/spots
+/* --------------------- */
+/*        Routes         */
+/* --------------------- */
+
+/* GET /api/spots - Returns all of the spots */
 router.get("/", validateQueryParams, async (req, res) => {
   const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
     req.query;
@@ -251,8 +316,7 @@ router.get("/:spotId/reviews", async (req, res) => {
   return res.json({ Reviews: reviews });
 });
 
-// GET /api/spots/:spotId
-// Gets the info for a specific spot
+/* GET /api/spots/:spotId - Gets the info for a specific spot */
 router.get("/:spotId", async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId, {
     include: [
@@ -297,8 +361,7 @@ router.get("/:spotId", async (req, res) => {
   });
 });
 
-// POST /api/spots
-// Creates a new spot
+/* POST /api/spots */
 router.post("/", requireAuth, validateSpot, async (req, res, next) => {
   const newSpot = await Spot.create({ ownerId: req.user.id, ...req.body });
   return res.status(201).json(newSpot);
@@ -368,7 +431,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
 router.post(
   "/:spotId/reviews",
   requireAuth,
-  validateReview,
+  validateReviewInput,
   async (req, res, next) => {
     const userId = req.user.id;
     const spotId = parseInt(req.params.spotId, 10);
@@ -407,49 +470,6 @@ router.post(
   }
 );
 
-// GET /api/spots/:spotId/reviews
-// Get all reviews by a spot's ID
-router.get("/:spotId/reviews", async (req, res, next) => {
-  const spotId = req.params.spotId;
-
-  // Check if the spot exists
-  const spot = await Spot.findByPk(spotId);
-  if (!spot) {
-    return res.status(404).json({ message: "Spot couldn't be found" });
-  }
-
-  // Get the reviews for the spot, which includes User and ReviewImages
-  const reviews = await Review.findAll({
-    where: { spotId },
-    include: [
-      {
-        model: User,
-        attributes: ["id", "firstName", "lastName"],
-      },
-      {
-        model: ReviewImage,
-        attributes: ["id", "url"],
-      },
-    ],
-  });
-
-  // Format the reviews properly
-  const formattedReviews = reviews.map((review) => ({
-    id: review.id,
-    userId: review.userId,
-    spotId: review.spotId,
-    review: review.review,
-    stars: review.stars,
-    createdAt: review.createdAt.toISOString(), // Correct date format
-    updatedAt: review.updatedAt.toISOString(),
-    User: review.User, // Include User info
-    ReviewImages: review.ReviewImages, // Include ReviewImages
-  }));
-  return res.status(200).json({ Reviews: formattedReviews });
-});
-
-module.exports = router;
-
 // DELETE /api/spots/:spotId/images
 // Deletes all images for a specific spot
 router.delete("/:spotId/images", requireAuth, async (req, res) => {
@@ -470,3 +490,6 @@ router.delete("/:spotId/images", requireAuth, async (req, res) => {
 
   return res.json({ message: "All images deleted for this spot" });
 });
+
+
+module.exports = router;
