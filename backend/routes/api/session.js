@@ -26,6 +26,22 @@ const validateLogin = [
 /*        Routes         */
 /* --------------------- */
 
+/* GET /api/session - Get the current user */
+router.get("/", (req, res) => {
+  const { user } = req;
+
+  if (user) {
+    const safeUser = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username,
+    };
+    return res.json({ user: safeUser });
+  } else return res.json({ user: null });
+});
+
 /* POST /api/session - Log the user in */
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
@@ -64,22 +80,6 @@ router.post("/", validateLogin, async (req, res, next) => {
 router.delete("/", (_req, res) => {
   res.clearCookie("token");
   return res.json({ message: "success" });
-});
-
-/* GET /api/session - Get the current user */
-router.get("/", (req, res) => {
-  const { user } = req;
-
-  if (user) {
-    const safeUser = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-    };
-    return res.json({ user: safeUser });
-  } else return res.json({ user: null });
 });
 
 module.exports = router;
