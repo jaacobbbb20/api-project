@@ -17,7 +17,14 @@ if (import.meta.env.MODE === 'production') {
   enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 }
 
-const configureStore = (preloadedState) =>
-  createStore(rootReducer, preloadedState, enhancer);
+const configureStore = (preloadedState) => {
+  const store = createStore(rootReducer, preloadedState, enhancer);
+
+  if (import.meta.env.MODE !== 'production') {
+    window.store = store;
+  }
+
+  return store;
+};
 
 export default configureStore;
