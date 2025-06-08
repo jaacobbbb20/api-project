@@ -1,11 +1,12 @@
 // src/store/store.js
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import logger from 'redux-logger'; // Only used in dev
+import logger from 'redux-logger';
+import sessionReducer, { login } from './session';
 
 // Placeholder root reducer
 const rootReducer = combineReducers({
-  // example: exampleReducer,
+  session: sessionReducer
 });
 
 let enhancer;
@@ -22,6 +23,7 @@ const configureStore = (preloadedState) => {
 
   if (import.meta.env.MODE !== 'production') {
     window.store = store;
+    window.login = login;
   }
 
   return store;
