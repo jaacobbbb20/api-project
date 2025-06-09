@@ -2,7 +2,7 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import sessionReducer, { login } from './session';
+import sessionReducer, { login, restoreUser } from './session';
 
 // Placeholder root reducer
 const rootReducer = combineReducers({
@@ -24,6 +24,7 @@ const configureStore = (preloadedState) => {
   if (import.meta.env.MODE !== 'production') {
     window.store = store;
     window.login = login;
+    window.restoreUser = restoreUser;
   }
 
   return store;
