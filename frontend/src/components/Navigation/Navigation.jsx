@@ -1,15 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import * as sessionActions from "../../store/session"; // Make sure this path is correct
-import { FaBars, FaUserCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { FaBars } from "react-icons/fa";
+import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import { useState } from "react";
 
 function Navigation({ isLoaded }) {
-  const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const [showMenu, setShowMenu] = useState(false);
-  const toggleMenu = () => setShowMenu((prev) => !prev);
 
   return (
     <nav className="navbar">
@@ -24,53 +20,20 @@ function Navigation({ isLoaded }) {
         </button>
 
         <div className="profile-wrapper">
-          <button className="profile-icon" onClick={toggleMenu}>
-            <FaUserCircle />
-          </button>
+          {isLoaded && sessionUser && <ProfileButton user={sessionUser} />}
 
-          {isLoaded && showMenu && (
+          {isLoaded && !sessionUser && (
             <ul className="dropdown-menu">
-              {sessionUser ? (
-                <>
-                  <li className="dropdown-text">{sessionUser.username}</li>
-                  <li className="dropdown-text">
-                    {sessionUser.firstName} {sessionUser.lastName}
-                  </li>
-                  <li className="dropdown-text">{sessionUser.email}</li>
-                  <li>
-                    <button
-                      className="dropdown-link"
-                      onClick={() => {
-                        setShowMenu(false);
-                        dispatch(sessionActions.logout());
-                      }}
-                    >
-                      Log Out
-                    </button>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li>
-                    <NavLink
-                      to="/login"
-                      className="dropdown-link"
-                      onClick={() => setShowMenu(false)}
-                    >
-                      Log In
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to="/signup"
-                      className="dropdown-link"
-                      onClick={() => setShowMenu(false)}
-                    >
-                      Sign Up
-                    </NavLink>
-                  </li>
-                </>
-              )}
+              <li>
+                <NavLink to="/login" className="dropdown-link">
+                  Log In
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/signup" className="dropdown-link">
+                  Sign Up
+                </NavLink>
+              </li>
             </ul>
           )}
         </div>

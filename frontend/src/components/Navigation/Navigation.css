@@ -43,7 +43,7 @@
   position: relative;
 }
 
-.dropdown-menu {
+.profile-dropdown {
   position: absolute;
   top: 100%;
   right: 0;
@@ -59,7 +59,7 @@
   gap: 0.5rem;
 }
 
-.dropdown-menu li {
+.profile-dropdown li {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,12 +72,16 @@
   cursor: pointer;
 }
 
-.dropdown-menu li:hover {
+.profile-dropdown li:hover {
   background-color: #ff383f;
   color: white;
 }
 
-.dropdown-menu li a {
+.profile-dropdown li a {
   color: white;
   text-decoration: none;
+}
+
+.profile-dropdown.hidden {
+  display: none;
 }
