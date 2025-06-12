@@ -17,11 +17,11 @@ function Layout() {
   }, [dispatch]);
 
   return (
-  <>
-  <Navigation isLoaded={isLoaded} />
-  {isLoaded && <Outlet />}
-  </>
-  )
+    <>
+      <Navigation isLoaded={isLoaded} />
+      {isLoaded && <Outlet />}
+    </>
+  );
 }
 
 const router = createBrowserRouter([
@@ -38,8 +38,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <SignupFormPage />
-      }
+        element: <SignupFormPage />,
+      },
     ],
   },
 ]);
