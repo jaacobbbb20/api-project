@@ -3,46 +3,94 @@
 /*----------------------------*/
 /* These styles are for the Logo and User Menu */
 
-.nav {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #eee;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  list-style: none;
+  margin: 0;
 }
 
-.nav__logo {
-  font-weight: bold;
-  font-size: 2rem;
+.navbar__logo {
   color: #ff5a5f;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.navbar__item {
+  margin-left: 1rem;
+}
+
+.navbar__item a,
+.navbar__item button {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.navbar__item a:hover,
+.navbar__item button:hover {
+  background-color: #f2f2f2;
+}
+.navbar__auth {
+  display: flex;
+  gap: 1rem;
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
   text-decoration: none;
 }
 
-.nav__right {
-  display: flex;
-  align-items: center;
+.navbar__create-link {
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-right: .5rem;
 }
 
-.nav__menu {
-  position: relative;
-  display: inline-block;
+.navbar__create-link:hover {
+  background-color: #e0484d;
 }
 
-.nav__menu-toggle {
-  background: none;
-  border: none;
-  font-size: 1.75rem;
-  color: #1b1b1b;
+.navbar__right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
+  gap: 1rem;
+  list-style: none;
 }
+
 
 /*-----------------------------*/
 /*  ProfileButton.jsx Styling  */
 /*-----------------------------*/
 /* These styles are for the dropdown menu and the contents within */
+
+.profile-icon {
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  color: #1b1b1b;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .profile-wrapper {
   position: relative;

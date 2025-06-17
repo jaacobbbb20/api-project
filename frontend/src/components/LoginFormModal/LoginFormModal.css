@@ -1,62 +1,113 @@
-/*------------------------------*/
-/*           Layout             */
-/*------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-.login-card {
-  border: 2px solid;
-  border-radius: .5rem;
-  padding:25px;
-  width: 30rem;
-  height: 25rem;
-}
+/* ------------------------------ */
+/*           Layout               */
+/* ------------------------------ */
 
 .login-background {
-  height: 100vh;;
+  font-family: 'Roboto', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
 }
 
-/*------------------------------*/
-/*           Header             */
-/*------------------------------*/
+.login-card {
+  background: #ffffff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ------------------------------ */
+/*           Header               */
+/* ------------------------------ */
 
 .login-content h1 {
   text-align: center;
-  margin-bottom: 5rem;
-}
-
-/*------------------------------*/
-/*         Input Fields         */
-/*------------------------------*/
-
-.user-email-card, 
-.user-password-card, input {
-  display: block;
+  font-size: 1.8rem;
   margin-bottom: 2rem;
 }
 
-/*------------------------------*/
-/*            Input             */
-/*------------------------------*/
+/* ------------------------------ */
+/*         Input Fields           */
+/* ------------------------------ */
+
+.user-email-card,
+.user-password-card {
+  margin-bottom: 1.5rem;
+}
+
+.user-email-card label,
+.user-password-card label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.5rem;
+}
 
 .input {
   width: 100%;
-  box-sizing: border-box;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  height: 30px;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
-/*------------------------------*/
-/*            Button            */
-/*------------------------------*/
+/* ------------------------------ */
+/*            Button              */
+/* ------------------------------ */
 
 .button {
   width: 100%;
-  box-sizing: border-box;
   height: 40px;
-  background-color: #FF5A5F;
+  background-color: #ff5a5f;
   color: white;
+  font-weight: bold;
+  border: none;
   border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.button:hover:enabled {
+  background-color: #e5484c;
+}
+
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* ------------------------------ */
+/*        Error Message           */
+/* ------------------------------ */
+
+.error-text {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* ------------------------------ */
+/*         Demo Button            */
+/* ------------------------------ */
+
+.demo-button {
+  background: none;
+  border: none;
+  color: #008489;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+.demo-button:hover {
+  text-decoration: underline;
 }

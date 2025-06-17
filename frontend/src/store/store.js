@@ -3,10 +3,14 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import sessionReducer, { login, restoreUser } from './session';
+import spotsReducer from './spots';
+import reviewsReducer from './reviews';
 
 // Placeholder root reducer
 const rootReducer = combineReducers({
-  session: sessionReducer
+  session: sessionReducer,
+  spots: spotsReducer,
+  reviews: reviewsReducer
 });
 
 let enhancer;

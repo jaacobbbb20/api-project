@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+/*------------------------------*/
+/*          Container           */
+/*------------------------------*/
+
+.manage-spots {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.manage-spots h1 {
+  font-size: 2rem;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 1rem;
+}
+
+/*------------------------------*/
+/*      Create Spot Button      */
+/*------------------------------*/
+
+.manage-spots__create-button {
+  background-color: #ff5a5f;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.manage-spots__create-button:hover {
+  background-color: #e04b4f;
+}
+
+/*------------------------------*/
+/*         Grid Layout          */
+/*------------------------------*/
+
+.manage-spots__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/*------------------------------*/
+/*          Spot Card           */
+/*------------------------------*/
+
+.manage-spots__card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.manage-spots__image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.manage-spots__info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.manage-spots__header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+
+.manage-spots__location {
+}
+
+.manage-spots__rating {
+}
+
+.manage-spots__price {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+}
+
+/*------------------------------*/
+/*       Action Buttons         */
+/*------------------------------*/
+
+.manage-spots__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.manage-spots__update-button,
+.manage-spots__delete-button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+
+  cursor: pointer;
+}
+
+.manage-spots__update-button {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.manage-spots__delete-button {
+  background-color: #ff5a5f;
+  color: white;
+}
+
+.manage-spots__update-button:hover {
+  background-color: #e6e6e6;
+}
+
+.manage-spots__delete-button:hover {
+  background-color: #e04b4f;
+}

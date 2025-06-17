@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const Validator = require('validator'); // ✅ Add this import at the top
+const Validator = require('validator');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {

@@ -1,0 +1,47 @@
+/* EditSpotForm.css */
+
+.edit-spot-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.edit-spot-form h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  text-align: center;
+  color: #333;
+}
+
+.edit-spot-form input,
+.edit-spot-form textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.edit-spot-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.edit-spot-form button {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-spot-form button:hover {
+  background-color: #e0484d;
+}

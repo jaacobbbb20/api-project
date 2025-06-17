@@ -164,7 +164,7 @@ router.put(
 
 /* DELETE /api/reviews/:reviewId - Delete a review based on the review's id */
 router.delete("/:reviewId", requireAuth, async (req, res) => {
-  const reviewId = parseInt(req.params.reviewId, 10); // ✅ Parse to integer
+  const reviewId = parseInt(req.params.reviewId, 10);
   const userId = req.user.id;
 
   if (isNaN(reviewId)) {

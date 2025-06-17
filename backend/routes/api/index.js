@@ -13,7 +13,6 @@ router.use('/spots', spotsRouter);
 router.use('/spots', reviewsRouter);
 router.use('/reviews', reviewsRouter);
 
-// Add a XSRF-TOKEN cookie in development
 if (process.env.NODE_ENV !== 'production') {
   router.get("/csrf/restore", (req, res) => {
     const csrfToken = req.csrfToken();
@@ -24,7 +23,6 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// Fallback 404 (OPTIONAL: usually better to do this globally in app.js)
 router.use((req, res) => {
   res.status(404).json({ message: "Resource not found" });
 });

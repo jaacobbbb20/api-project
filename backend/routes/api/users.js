@@ -16,7 +16,6 @@ const router = express.Router();
 router.post('/', validateSignup, async (req, res, next) => {
     const { firstName, lastName, email, username, password } = req.body;
     
-    // Check if a user with the same username or email already exists
     const existingUser = await User.findOne({ where: { [Op.or]: [{ email }, { username }] } });
 
     if (existingUser) {
@@ -29,11 +28,9 @@ router.post('/', validateSignup, async (req, res, next) => {
       });
     }
 
-    // If the user does not exist, first hash the password, then create a new user
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({ firstName, lastName, email, username, hashedPassword });
 
-    // Prepare the data for the response
     const safeUser = {
       id: user.id,
       firstName: user.firstName,

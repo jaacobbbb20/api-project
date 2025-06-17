@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import * as sessionActions from '../../store/session';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import './LoginFormModal.css';
+import { useState } from "react";
+import * as sessionActions from "../../store/session";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import "./LoginFormModal.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -10,6 +10,8 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+
+  const isDisabled = credential.length < 4 || password.length < 6;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,6 +26,15 @@ function LoginFormModal() {
       });
   };
 
+  const handleDemoLogin = () => {
+    dispatch(
+      sessionActions.login({
+        credential: "Demo-lition",
+        password: "password",
+      })
+    ).then(closeModal);
+  };
+
   return (
     <div className="login-background">
       <div className="login-card">
@@ -32,7 +43,8 @@ function LoginFormModal() {
           <form onSubmit={handleSubmit}>
             <label className="user-email-card">
               Username or Email
-              <input className="input"
+              <input
+                className="input"
                 type="text"
                 value={credential}
                 onChange={(e) => setCredential(e.target.value)}
@@ -41,16 +53,24 @@ function LoginFormModal() {
             </label>
             <label className="user-password-card">
               Password
-              <input className="input"
+              <input
+                className="input"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </label>
-            {errors.credential && <p>{errors.credential}</p>}
-            <button className="button" type="submit">Log In</button>
+            {errors.credential && (
+              <p className="error-text">{errors.credential}</p>
+            )}
+            <button className="button" type="submit" disabled={isDisabled}>
+              Log In
+            </button>
           </form>
+          <button className="demo-button" onClick={handleDemoLogin}>
+            Demo User
+          </button>
         </div>
       </div>
     </div>

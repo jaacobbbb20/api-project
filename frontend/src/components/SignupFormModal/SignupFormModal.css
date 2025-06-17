@@ -1,54 +1,81 @@
-/*------------------------------*/
-/*           Layout             */
-/*------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* ------------------------------ */
+/*           Layout               */
+/* ------------------------------ */
+
 .signup-background {
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  font-family: 'Roboto', sans-serif;
 }
 
 .signup-card {
-  border: 2px solid;
-  border-radius: 0.5rem;
-  padding: 25px;
+  padding: 2rem;
   width: 30rem;
-  height: auto;
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
 }
+
+/* ------------------------------ */
+/*           Headings             */
+/* ------------------------------ */
 
 .signup-content h1 {
   text-align: center;
-  margin-bottom: 2.5rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #222;
 }
 
-/*------------------------------*/
-/*            Label             */
-/*------------------------------*/
+/* ------------------------------ */
+/*            Label               */
+/* ------------------------------ */
 
 .signup-label {
   display: block;
+  font-size: 0.95rem;
   margin-bottom: 1.5rem;
+  color: #333;
+  font-weight: 500;
 }
 
-/*------------------------------*/
-/*            Input             */
-/*------------------------------*/
+/* ------------------------------ */
+/*            Input               */
+/* ------------------------------ */
+
 .input {
   width: 100%;
-  box-sizing: border-box;
+  height: 35px;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  height: 30px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
-/*------------------------------*/
-/*            Button            */
-/*------------------------------*/
+/* ------------------------------ */
+/*            Button              */
+/* ------------------------------ */
+
 .button {
   width: 100%;
-  box-sizing: border-box;
-  height: 40px;
-  background-color: #FF5A5F;
+  height: 45px;
+  background-color: #ff5a5f;
   color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
   border-radius: 8px;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #e0484d;
 }
