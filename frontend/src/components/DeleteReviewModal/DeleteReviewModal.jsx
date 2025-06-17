@@ -1,12 +1,14 @@
-// frontend/src/components/DeleteReviewModal/DeleteReviewModal.jsx
+import { useDispatch } from "react-redux";
+import { deleteReview } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 import "./DeleteReviewModal.css";
 
-function DeleteReviewModal({ onDelete }) {
+function DeleteReviewModal({ reviewId }) {
+  const dispatch = useDispatch();
   const { closeModal } = useModal();
 
-  const handleConfirm = () => {
-    onDelete();
+  const handleDelete = async () => {
+    await dispatch(deleteReview(reviewId));
     closeModal();
   };
 
@@ -14,14 +16,18 @@ function DeleteReviewModal({ onDelete }) {
     <div className="delete-review-modal">
       <h2>Confirm Delete</h2>
       <p>Are you sure you want to delete this review?</p>
-      <div className="delete-buttons">
-        <button onClick={handleConfirm} className="confirm-delete">
-          Yes (Delete Review)
-        </button>
-        <button onClick={closeModal} className="cancel-delete">
-          No (Keep Review)
-        </button>
-      </div>
+      <button
+        className="delete-review__button delete-review__button--confirm"
+        onClick={handleDelete}
+      >
+        Yes (Delete Review)
+      </button>
+      <button
+        className="delete-review__button delete-review__button--cancel"
+        onClick={closeModal}
+      >
+        No (Keep Review)
+      </button>
     </div>
   );
 }

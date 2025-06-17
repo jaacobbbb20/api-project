@@ -1,23 +1,31 @@
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { deleteSpot, fetchUserSpots } from "../../store/spots";
 import "./DeleteSpotModal.css";
 
-function DeleteSpotModal({ onDelete }) {
+function DeleteSpotModal({ spotId }) {
+  const dispatch = useDispatch();
   const { closeModal } = useModal();
 
-  const handleConfirm = () => {
-    onDelete();
-    closeModal();
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteSpot(spotId));
+      await dispatch(fetchUserSpots());
+      closeModal();
+    } catch (err) {
+      console.error("Failed to delete spot:", err);
+    }
   };
 
   return (
     <div className="delete-spot-modal">
-      <h2>Confirm Delete</h2>
-      <p>Are you sure you want to delete this spot?</p>
-      <div className="delete-spot-buttons">
-        <button onClick={handleConfirm} className="confirm-delete">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to remove this spot?</p>
+      <div className="delete-spot-modal__actions">
+        <button className="confirm-delete" onClick={handleDelete}>
           Yes (Delete Spot)
         </button>
-        <button onClick={closeModal} className="cancel-delete">
+        <button className="cancel-delete" onClick={closeModal}>
           No (Keep Spot)
         </button>
       </div>

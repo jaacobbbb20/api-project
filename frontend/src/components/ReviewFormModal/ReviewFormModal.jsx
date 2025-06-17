@@ -1,95 +1,69 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createReview } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
+import { postReview } from "../../store/reviews";
+import { fetchSpotDetails } from "../../store/spots";
 import "./ReviewFormModal.css";
 
-function StarRating({ stars, setStars }) {
-  const [hover, setHover] = useState(0);
-
-  return (
-    <div className="star-rating-container">
-      <div className="star-rating">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <span
-            key={star}
-            className={`star ${star <= (hover || stars) ? "filled" : ""}`}
-            onClick={() => setStars(star)}
-            onMouseEnter={() => setHover(star)}
-            onMouseLeave={() => setHover(0)}
-            role="button"
-            aria-label={`${star} Star`}
-          >
-            &#9733;
-          </span>
-        ))}
-      </div>
-      <span className="star-rating-label">Stars</span>
-    </div>
-  );
-}
-
-function ReviewFormModal({ spotId }) {
+function ReviewFormModal({ spotId, onModalClose }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
-  const [errors, setErrors] = useState([]);
+  const [hover, setHover] = useState(0);
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
 
-    const newReview = {
-      review,
-      stars: parseInt(stars, 10),
-    };
+    const payload = { review, stars };
 
-
-    const res = await dispatch(createReview(spotId, newReview));
-
-    if (res.errors) {
-      setErrors(res.errors);
-    } else {
+    try {
+      await dispatch(postReview(spotId, payload));
+      await dispatch(fetchSpotDetails(spotId));
       closeModal();
+      if (onModalClose) onModalClose();
+    } catch (res) {
+      const data = await res.json();
+      if (data && data.message) setErrors({ message: data.message });
     }
   };
 
+  const isDisabled = review.length < 10 || stars < 1;
+
   return (
-    <div
-      className="review-modal__overlay"
-      onClick={(e) => {
-        if (e.target.classList.contains("review-modal__overlay")) {
-          closeModal();
-        }
-      }}
-    >
-      <div className="review-modal">
-        <h2 className="review-modal__title">How was your stay?</h2>
-        <form onSubmit={handleSubmit}>
-          {errors.map((err, idx) => (
-            <p key={idx} className="review-modal__error">
-              {err}
-            </p>
-          ))}
+    <form className="review-form" onSubmit={handleSubmit}>
+      <h2>How was your stay?</h2>
 
-          <textarea
-            placeholder="Leave your review here..."
-            value={review}
-            onChange={(e) => setReview(e.target.value)}
-            required
-          />
+      {errors.message && <p className="error">{errors.message}</p>}
 
-          <StarRating stars={stars} setStars={setStars} />
+      <textarea
+        placeholder="Leave your review here..."
+        value={review}
+        onChange={(e) => setReview(e.target.value)}
+      />
 
-          <button
-            type="submit"
-            disabled={review.trim().length < 10 || stars < 1}
+      <div className="star-input">
+        {[1, 2, 3, 4, 5].map((num) => (
+          <span
+            key={num}
+            className={num <= (hover || stars) ? "filled" : "empty"}
+            onClick={() => setStars(num)}
+            onMouseEnter={() => setHover(num)}
+            onMouseLeave={() => setHover(stars)}
           >
-            Submit Review
-          </button>
-        </form>
+            ★
+          </span>
+        ))}
+        <span>Stars</span>
       </div>
-    </div>
+
+      <button type="submit" disabled={isDisabled}>
+        Submit Your Review
+      </button>
+    </form>
   );
 }
 

@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Navigation from "./components/Navigation/Navigation";
-import * as sessionActions from "./store/session";
-import AllSpots from "./components/Spots/AllSpots/AllSpots";
-import SpotDetails from "./components/Spots/SpotDetails/SpotDetails";
-import CreateSpotPage from "./components/Spots/CreateSpot/CreateSpot";
-import ManageSpots from "./components/Spots/ManageSpots/ManageSpots";
-import UpdateSpotPage from "./components/Spots/ManageSpots/UpdateSpotPage";
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import Navigation from './components/Navigation/Navigation';
+import LandingPage from './components/LandingPage/LandingPage';
+import SpotDetails from './components/SpotDetails/SpotDetails';
+import CreateSpotForm from './components/CreateSpotForm/CreateSpotForm';
+import ManageSpots from './components/ManageSpots/ManageSpots';
+import * as sessionActions from './store/session';
+import EditSpotForm from './components/EditSpotForm/EditSpotForm';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function Layout() {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
-      setIsLoaded(true);
+      setIsLoaded(true)
     });
   }, [dispatch]);
 
@@ -29,31 +29,30 @@ function Layout() {
 
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <Layout />,
     children: [
       {
-        path: "/",
-        element: <AllSpots />,
+        path: '/',
+        element: <LandingPage />
       },
       {
-        path: "/spots/:spotId",
-        element: <SpotDetails />,
+        path: '/spots/:spotId',
+        element: <SpotDetails />
       },
       {
-        path: "/spots/new",
-        element: <CreateSpotPage />,
+        path: '/spots/new/',
+        element: <CreateSpotForm />
       },
       {
-        path: "/spots/current",
-        element: <ManageSpots />,
+        path: '/spots/current',
+        element: <ManageSpots />
       },
       {
         path: '/spots/:spotId/edit',
-        element: <UpdateSpotPage />
+        element: <EditSpotForm />
       }
-    ],
-  },
+    ]
+  }
 ]);
 
 function App() {

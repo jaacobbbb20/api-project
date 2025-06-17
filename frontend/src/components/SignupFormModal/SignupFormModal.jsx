@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useModal } from "../../context/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import * as sessionActions from "../../store/session";
-import "./SignupForm.css";
+import "./SignupFormModal.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -13,7 +14,8 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+
+  if (sessionUser) return <Navigate to="/" replace={true} />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,14 +29,12 @@ function SignupFormModal() {
           lastName,
           password,
         })
-      )
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        });
+      ).catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
+      });
     }
     return setErrors({
       confirmPassword:
@@ -43,106 +43,86 @@ function SignupFormModal() {
   };
 
   return (
-    <div
-      className="modal-overlay"
-      onClick={(e) => {
-        if (e.target.classList.contains("modal-overlay")) closeModal();
-      }}
-    >
-      <div className="container">
-        <div className="header">
-          <div className="text">Sign Up</div>
-          <div className="underline"></div>
-        </div>
-
-        {Object.values(errors).length > 0 && (
-          <div className="top-error-messages">
-            <ul>
-              {Object.values(errors).map((error, idx) => (
-                <li key={idx}>{error}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <div className="inputs">
-            <label>
+    <div className="signup-background">
+      <div className="signup-card">
+        <div className="signup-content">
+          <h1>Sign Up</h1>
+          <form onSubmit={handleSubmit}>
+            <label className="signup-label">
               First Name
               <input
+                className="input"
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 required
               />
             </label>
-
-            <label>
+            {errors.firstName && <p>{errors.firstName}</p>}
+            <label className="signup-label">
               Last Name
               <input
+                className="input"
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 required
               />
             </label>
-
-            <label>
+            {errors.lastName && <p>{errors.lastName}</p>}
+            <label className="signup-label">
               Email
               <input
+                className="input"
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </label>
-
-            <label>
+            {errors.email && <p>{errors.email}</p>}
+            <label className="signup-label">
               Username
               <input
+                className="input"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </label>
-
-            <label>
+            {errors.username && <p>{errors.username}</p>}
+            <label className="signup-label">
               Password
               <input
+                className="input"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </label>
-
-            <label>
+            {errors.password && <p>{errors.password}</p>}
+            <label className="signup-label">
               Confirm Password
               <input
+                className="input"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
             </label>
-          </div>
-
-          <button
-            type="submit"
-            disabled={
-              !firstName ||
-              !lastName ||
-              !email ||
-              username.length < 4 ||
-              !password ||
-              !confirmPassword ||
-              password !== confirmPassword
-            }
-          >
-            Sign Up
-          </button>
-        </form>
+            {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+            <button
+              className="button"
+              type="submit"
+              disabled={username.length < 4 || password.length < 6}
+            >
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
