@@ -1,11 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-
 /* ------------------------------ */
 /*      Delete Review Modal       */
 /* ------------------------------ */
 
 .delete-review-modal {
-  font-family: "Roboto", sans-serif;
   padding: 2rem;
   background-color: #fff;
   text-align: center;
