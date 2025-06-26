@@ -39,7 +39,9 @@ function LandingPage() {
                 <div className="spot-card__rating">
                   <FaStar className="spot-card__star-icon" />
                   <span>
-                    {spot.avgRating ? Number(spot.avgRating).toFixed(1) : "New"}
+                    {Number(spot.avgRating) > 0
+                      ? Number(spot.avgRating).toFixed(1)
+                      : "New"}
                   </span>
                 </div>
               </div>
