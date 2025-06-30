@@ -1,10 +1,4 @@
 /*----------------------------*/
-/*        Font Import         */
-/*----------------------------*/
-
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-
-/*----------------------------*/
 /*          Wrapper           */
 /*----------------------------*/
 
@@ -48,7 +42,6 @@
 
 .spot-card__info {
   padding: 1rem;
-  font-family: "Roboto", sans-serif;
 }
 
 .spot-card__subheader {
@@ -59,7 +52,6 @@
 
 .spot-card__location {
   font-size: 18px;
-  font-family: "Roboto", sans-serif;
   color: #333;
 }
 
@@ -68,7 +60,6 @@
   align-items: center;
   gap: 4px;
   font-weight: bold;
-  font-family: "Roboto", sans-serif;
 }
 
 .spot-card__star-icon {
@@ -77,5 +68,4 @@
 
 .spot-card__price {
   font-size: 0.95rem;
-  font-family: "Roboto", sans-serif;
 }

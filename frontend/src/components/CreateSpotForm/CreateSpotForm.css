@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* ------------------------------ */
 /*        Container Layout        */
@@ -9,7 +8,8 @@
   margin: 2rem auto;
   padding: 2rem;
   background-color: #ffffff;
-  font-family: "Roboto", sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form-heading {
@@ -45,10 +45,17 @@
   width: 100%;
   padding: 0.6rem;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   margin-top: 0.3rem;
   box-sizing: border-box;
+}
+
+.create-spot-form input:focus,
+.create-spot-form textarea:focus {
+  border-color: #ff5a5f;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 90, 95, 0.2);
 }
 
 .create-spot-form textarea {
@@ -83,10 +90,12 @@
 
 .create-spot-form button[type="button"],
 .create-spot-form button[type="submit"] {
-  padding: 0.75rem;
+  padding: 0.75rem 1.75rem;
+  font-size: 1rem;
   font-weight: 500;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  border: none;
 }
 
 .create-spot-form button[type="button"] {
@@ -113,3 +122,4 @@
 .create-spot-form button[type="submit"]:hover {
   background-color: #e0484d;
 }
+
