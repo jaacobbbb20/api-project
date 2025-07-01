@@ -37,7 +37,6 @@ export function ModalProvider({ children }) {
 
 export function Modal() {
   const { modalRef, modalContent, closeModal } = useContext(ModalContext);
-  useContext(ModalContext);
 
   if (!modalRef || !modalRef.current || !modalContent) return null;
 

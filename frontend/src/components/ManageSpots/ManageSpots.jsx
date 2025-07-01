@@ -78,7 +78,9 @@ function ManageSpots() {
                   modalComponent={
                     <DeleteSpotModal
                       spotId={spot.id}
-                      onDelete={() => dispatch(fetchUserSpots())}
+                      onDelete={() => {
+                        navigate('/')
+                      }}
                     />
                   }
                   onButtonClick={(e) => e.stopPropagation()}

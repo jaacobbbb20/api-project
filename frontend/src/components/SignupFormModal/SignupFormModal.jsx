@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import { useModal } from "../../context/Modal";
 import "./SignupFormModal.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
   const sessionUser = useSelector((state) => state.session.user);
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -15,7 +17,11 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+  useEffect(() => {
+    if (sessionUser) {
+      closeModal();
+    }
+  }, [sessionUser, closeModal]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,14 +35,17 @@ function SignupFormModal() {
           lastName,
           password,
         })
-      ).catch(async (res) => {
-        const data = await res.json();
-        if (data?.errors) {
-          setErrors(data.errors);
-        }
-      });
+      )
+        .then(closeModal)
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data?.errors) {
+            setErrors(data.errors);
+          }
+        });
     }
-    return setErrors({
+
+    setErrors({
       confirmPassword:
         "Confirm Password field must be the same as the Password field",
     });
@@ -58,7 +67,8 @@ function SignupFormModal() {
                 required
               />
             </label>
-            {errors.firstName && <p>{errors.firstName}</p>}
+            {errors.firstName && <p className="error">{errors.firstName}</p>}
+
             <label className="signup-label">
               Last Name
               <input
@@ -69,7 +79,8 @@ function SignupFormModal() {
                 required
               />
             </label>
-            {errors.lastName && <p>{errors.lastName}</p>}
+            {errors.lastName && <p className="error">{errors.lastName}</p>}
+
             <label className="signup-label">
               Email
               <input
@@ -80,7 +91,8 @@ function SignupFormModal() {
                 required
               />
             </label>
-            {errors.email && <p>{errors.email}</p>}
+            {errors.email && <p className="error">{errors.email}</p>}
+
             <label className="signup-label">
               Username
               <input
@@ -91,7 +103,8 @@ function SignupFormModal() {
                 required
               />
             </label>
-            {errors.username && <p>{errors.username}</p>}
+            {errors.username && <p className="error">{errors.username}</p>}
+
             <label className="signup-label">
               Password
               <input
@@ -102,7 +115,8 @@ function SignupFormModal() {
                 required
               />
             </label>
-            {errors.password && <p>{errors.password}</p>}
+            {errors.password && <p className="error">{errors.password}</p>}
+
             <label className="signup-label">
               Confirm Password
               <input
@@ -113,7 +127,10 @@ function SignupFormModal() {
                 required
               />
             </label>
-            {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="error">{errors.confirmPassword}</p>
+            )}
+
             <button
               className="button"
               type="submit"
