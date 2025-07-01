@@ -1,16 +1,16 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { deleteSpot, fetchUserSpots } from "../../store/spots";
+import { deleteSpot } from "../../store/spots";
 import "./DeleteSpotModal.css";
 
-function DeleteSpotModal({ spotId }) {
+function DeleteSpotModal({ spotId, onDelete }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   const handleDelete = async () => {
     try {
       await dispatch(deleteSpot(spotId));
-      await dispatch(fetchUserSpots());
+      if (onDelete) onDelete();
       closeModal();
     } catch (err) {
       console.error("Failed to delete spot:", err);
