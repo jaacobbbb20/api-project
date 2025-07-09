@@ -95,3 +95,4 @@ function ManageSpots() {
 }
 
 export default ManageSpots;
+//Ignore this comment, made for committing purposes
